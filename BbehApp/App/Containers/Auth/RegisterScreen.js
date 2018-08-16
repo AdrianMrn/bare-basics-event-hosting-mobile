@@ -71,6 +71,7 @@ class SignInScreen extends React.Component {
                 value={user.password}
                 placeholder="Password"
                 style={styles.authInput}
+                secureTextEntry
               />
             </Item>
             <Button block success style={styles.authButton}>

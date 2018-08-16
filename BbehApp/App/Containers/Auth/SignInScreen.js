@@ -10,30 +10,45 @@ import {
 import { Container, Header, Content, Form, Item, Input, Button, Text } from 'native-base';
 
 import Store from '../../Services/Store';
+import { apiLogin } from '../../../App/Services/Api';
 
 import styles from './Styles/AuthStyles'
 
 class SignInScreen extends React.Component {
-  componentDidMount = () => {
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      password: ''
+    }
   }
 
   onInputChange = (field, text) => {
-    let user = this.props.store.get('user');
-    user = { ...user, [field]: text }
-    this.props.store.set('user')(user);
+    this.setState({
+      [field]: text
+    })
   }
-
-  _signInAsync = async () => {
-    await AsyncStorage.setItem('userToken', 'abc');
-    this.props.navigation.navigate('App');
-  };
 
   onPressRegisterText = () => {
     this.props.navigation.navigate('Register');
   }
 
+  onPressLogin = () => {
+    // TODO: form validation (especially email)
+    apiLogin({ email: this.state.email, password: this.state.password }, (error, response) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(response);
+        }
+      });
+
+    /* await AsyncStorage.setItem('userToken', 'abc');
+    this.props.navigation.navigate('App'); */
+  }
+
   render() {
-    const user = this.props.store.get('user');
+    const state = this.state;
     return (
       <Container style={styles.authScreen}>
         <Content>
@@ -42,7 +57,7 @@ class SignInScreen extends React.Component {
               <Input
                 focus
                 onChangeText={text => { this.onInputChange('email', text) }}
-                value={user.email}
+                value={state.email}
                 placeholder="E-Mail"
                 style={styles.authInput}
               />
@@ -50,12 +65,13 @@ class SignInScreen extends React.Component {
             <Item regular>
               <Input
                 onChangeText={text => { this.onInputChange('password', text) }}
-                value={user.password}
+                value={state.password}
                 placeholder="Password"
                 style={styles.authInput}
+                secureTextEntry
               />
             </Item>
-            <Button block success style={styles.authButton}>
+            <Button onPress={this.onPressLogin} block success style={styles.authButton}>
               <Text>Sign in</Text>
             </Button>
             <TouchableOpacity onPress={this.onPressRegisterText}>
