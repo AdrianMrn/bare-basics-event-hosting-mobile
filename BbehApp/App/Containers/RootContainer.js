@@ -7,6 +7,7 @@ import styles from './Styles/RootContainerStyles'
 
 import AuthLoadingScreen from './Auth/AuthLoadingScreen';
 import SignInScreen from './Auth/SignInScreen';
+import RegisterScreen from './Auth/RegisterScreen';
 import HomeScreen from './App/HomeScreen';
 
 
@@ -16,8 +17,8 @@ export default class RootContainer extends Component {
 
 
   AuthStack = createStackNavigator({
-    SignIn: { screen: SignInScreen, navigationOptions: { title: 'Log in' } },
-    //Register: { screen: RegisterScreen, navigationOptions: { title: 'Register' } },
+    SignIn: { screen: SignInScreen, navigationOptions: { header: null } },
+    Register: { screen: RegisterScreen, navigationOptions: { header: null } },
   });
   AppStack = createDrawerNavigator({ Home: HomeScreen/* , Other: OtherScreen */ });
 

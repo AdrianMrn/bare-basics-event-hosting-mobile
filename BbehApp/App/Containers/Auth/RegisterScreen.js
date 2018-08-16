@@ -23,13 +23,13 @@ class SignInScreen extends React.Component {
     this.props.store.set('user')(user);
   }
 
-  _signInAsync = async () => {
+  _RegisterAsync = async () => {
     await AsyncStorage.setItem('userToken', 'abc');
     this.props.navigation.navigate('App');
   };
 
-  onPressRegisterText = () => {
-    this.props.navigation.navigate('Register');
+  onPressLoginText = () => {
+    this.props.navigation.navigate('SignIn');
   }
 
   render() {
@@ -49,6 +49,24 @@ class SignInScreen extends React.Component {
             </Item>
             <Item regular>
               <Input
+                focus
+                onChangeText={text => { this.onInputChange('first_name', text) }}
+                value={user.first_name}
+                placeholder="First name"
+                style={styles.authInput}
+              />
+            </Item>
+            <Item regular>
+              <Input
+                focus
+                onChangeText={text => { this.onInputChange('last_name', text) }}
+                value={user.last_name}
+                placeholder="Last name"
+                style={styles.authInput}
+              />
+            </Item>
+            <Item regular>
+              <Input
                 onChangeText={text => { this.onInputChange('password', text) }}
                 value={user.password}
                 placeholder="Password"
@@ -56,10 +74,10 @@ class SignInScreen extends React.Component {
               />
             </Item>
             <Button block success style={styles.authButton}>
-              <Text>Sign in</Text>
+              <Text>Register</Text>
             </Button>
-            <TouchableOpacity onPress={this.onPressRegisterText}>
-              <Text style={styles.registerText}>New to BBEvents? Register here</Text>
+            <TouchableOpacity onPress={this.onPressLoginText}>
+              <Text style={styles.registerText}>Already have an account? Log in here</Text>
             </TouchableOpacity>
           </Form>
         </Content>
