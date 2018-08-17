@@ -19,7 +19,8 @@ class SignInScreen extends React.Component {
     super();
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      loading: false
     }
   }
 
@@ -34,24 +35,29 @@ class SignInScreen extends React.Component {
   }
 
   onPressLogin = () => {
+    this.setState({ loading: true });
     // TODO: form validation (especially email)
-    apiLogin({ email: this.state.email, password: this.state.password }, (error, response) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(response);
-        }
-      });
-
-    /* await AsyncStorage.setItem('userToken', 'abc');
-    this.props.navigation.navigate('App'); */
+    const state = this.state;
+    apiLogin({
+      email: state.email,
+      password: state.password
+    }, (error, response) => {
+      if (error) {
+        console.log(error);
+        // TODO: display error (toast?)
+        this.setState({ loading: false });
+      } else {
+        this.props.navigation.navigate('App');
+      }
+    });
   }
 
   render() {
     const state = this.state;
+    console.log(state);
     return (
       <Container style={styles.authScreen}>
-        <Content>
+        <Content padder>
           <Form style={styles.authForm}>
             <Item regular>
               <Input
@@ -71,10 +77,10 @@ class SignInScreen extends React.Component {
                 secureTextEntry
               />
             </Item>
-            <Button onPress={this.onPressLogin} block success style={styles.authButton}>
+            <Button onPress={this.onPressLogin} block disabled={state.loading ? true: false} success={state.loading ? false : true} style={styles.authButton}>
               <Text>Sign in</Text>
             </Button>
-            <TouchableOpacity onPress={this.onPressRegisterText}>
+            <TouchableOpacity disabled={state.loading} onPress={this.onPressRegisterText}>
               <Text style={styles.registerText}>New to BBEvents? Register here</Text>
             </TouchableOpacity>
           </Form>

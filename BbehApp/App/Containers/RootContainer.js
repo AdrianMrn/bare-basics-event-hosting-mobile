@@ -7,20 +7,27 @@ import styles from './Styles/RootContainerStyles'
 
 import AuthLoadingScreen from './Auth/AuthLoadingScreen';
 import SignInScreen from './Auth/SignInScreen';
+import LogOutScreen from './Auth/LogOutScreen';
 import RegisterScreen from './Auth/RegisterScreen';
-import HomeScreen from './App/HomeScreen';
+import EventOverview from './App/EventOverview';
+import ProfileScreen from './Profile/ProfileScreen';
 
+import SideBar from "./SideBar/SideBar.js";
 
 export default class RootContainer extends Component {
-  componentDidMount() {
-  }
-
-
   AuthStack = createStackNavigator({
     SignIn: { screen: SignInScreen, navigationOptions: { header: null } },
     Register: { screen: RegisterScreen, navigationOptions: { header: null } },
   });
-  AppStack = createDrawerNavigator({ Home: HomeScreen/* , Other: OtherScreen */ });
+
+  AppStack = createDrawerNavigator({
+    Home: EventOverview,
+    /*Other: OtherScreen */
+    Profile: ProfileScreen,
+    LogOut: LogOutScreen
+  }, {
+      contentComponent: props => <SideBar {...props} />
+    });
 
   SwitchNavigator = createSwitchNavigator(
     {

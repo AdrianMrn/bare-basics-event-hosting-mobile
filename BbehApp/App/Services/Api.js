@@ -29,3 +29,21 @@ export function apiLogin(data, next) {
       next(error);
     });
 }
+
+export function apiRegister(data, next) {
+  setAccessToken();
+  axios.post(`${apiUrl}/user/register`, {
+    first_name: data.first_name,
+    last_name: data.last_name,
+    email: data.email,
+    password: data.password
+  })
+    .then(response => {
+      AsyncStorage.setItem('userToken', response.data.access_token, () => {
+        next(false, response);
+      });
+    })
+    .catch(error => {
+      next(error);
+    });
+}
