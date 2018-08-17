@@ -54,7 +54,6 @@ class SignInScreen extends React.Component {
 
   render() {
     const state = this.state;
-    console.log(state);
     return (
       <Container style={styles.authScreen}>
         <Content padder>

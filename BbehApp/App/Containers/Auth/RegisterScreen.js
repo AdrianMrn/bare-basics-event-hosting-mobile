@@ -39,7 +39,6 @@ class SignInScreen extends React.Component {
   onPressRegister = () => {
     this.setState({ loading: true });
     // TODO: form validation (especially email)
-    console.log("registering");
     const state = this.state;
     apiRegister({
       email: state.email,

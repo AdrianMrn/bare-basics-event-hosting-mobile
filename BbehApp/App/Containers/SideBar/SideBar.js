@@ -27,7 +27,36 @@ export default class SideBar extends React.Component {
                         }}
                         />
                     </Image> */}
-                    <List
+
+                    <List>
+                        <ListItem // Home
+                            button
+                            onPress={() => this.props.navigation.navigate('Home')}
+                        >
+                            <Text>Events Overview</Text>
+                        </ListItem>
+
+                        {/* TODO: Render upcoming events from undux store, possibly with some kind of dropdown etc */}
+
+                        <ListItem // Profile
+                            button
+                            onPress={() => this.props.navigation.navigate('Profile')}
+                        >
+                            <Text>My Profile</Text>
+                            {/* TODO: icon */}
+                        </ListItem>
+
+                        <ListItem // Sign out
+                            button
+                            onPress={() => this.props.navigation.navigate('LogOut')}
+                        >
+                            <Text>Sign Out</Text>
+                            {/* TODO: icon */}
+                        </ListItem>
+                    </List>
+
+                    {/* TODO: Create list manually so we can use icons & have "My Profile" and "Log Out" stickied at the bottom? (flex end or whatever) */}
+                    {/* <List
                         dataArray={routes}
                         renderRow={data => {
                             return (
@@ -38,7 +67,7 @@ export default class SideBar extends React.Component {
                                 </ListItem>
                             );
                         }}
-                    />
+                    /> */}
                 </Content>
             </Container>
         );
