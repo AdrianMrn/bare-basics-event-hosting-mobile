@@ -5,23 +5,25 @@ import { AsyncStorage } from "react-native"
 
 /* const apiUrl = Config.API_URL; */
 
-const apiUrl = 'http://10.0.3.2:8000/api';
+const apiUrl = 'http://10.0.3.2:8000/api'; // TODO: set in .env
 
-function setAccessToken() {
-  /* if (accesToken) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accesToken}`;
-  } */
+async function setAccessToken() {
+  const accessToken = await AsyncStorage.getItem('accessToken');
+  if (accessToken) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  }
+
   axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+  return true;
 }
 
 export function apiLogin(data, next) {
-  setAccessToken();
   axios.post(`${apiUrl}/user/authenticate`, {
     email: data.email,
     password: data.password
   })
     .then(response => {
-      AsyncStorage.setItem('userToken', response.data.access_token, () => {
+      AsyncStorage.setItem('accessToken', response.data.access_token, () => {
         next(false, response);
       });
     })
@@ -31,7 +33,6 @@ export function apiLogin(data, next) {
 }
 
 export function apiRegister(data, next) {
-  setAccessToken();
   axios.post(`${apiUrl}/user/register`, {
     first_name: data.first_name,
     last_name: data.last_name,
@@ -39,9 +40,21 @@ export function apiRegister(data, next) {
     password: data.password
   })
     .then(response => {
-      AsyncStorage.setItem('userToken', response.data.access_token, () => {
+      AsyncStorage.setItem('accessToken', response.data.access_token, () => {
         next(false, response);
       });
+    })
+    .catch(error => {
+      next(error);
+    });
+}
+
+export async function apiFetchAttendingEvents(next) {
+  const accessToken = await setAccessToken();
+
+  axios.get(`${apiUrl}/get-attending-events`)
+    .then(response => {
+      next(false, response);
     })
     .catch(error => {
       next(error);

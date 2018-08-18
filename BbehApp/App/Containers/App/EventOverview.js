@@ -6,30 +6,49 @@ import {
     StyleSheet,
 } from 'react-native';
 import moment from 'moment';
-import { Container, Header, Title, Left, Icon, Right, Button, Body, Content, Text, Card, CardItem, List, ListItem, Separator } from "native-base";
+import { Container, Header, Title, Left, Icon, Right, Thumbnail, Button, Body, Content, Text, Card, CardItem, List, ListItem, Separator } from "native-base";
 
 import Store from '../../Services/Store';
-/* import { } from '../../../App/Services/Api'; */
+import { apiFetchAttendingEvents } from '../../../App/Services/Api';
 
-import styles from '../Styles/RootContainerStyles'
+import styles from './Styles/EventOverviewStyles';
 
 class EventOverview extends React.Component {
+    componentDidMount = () => {
+        this.fetchAttendingEvents();
+    }
 
-    _showMoreApp = () => {
-        this.props.navigation.navigate('Other');
-    };
+    fetchAttendingEvents = () => {
+        apiFetchAttendingEvents((error, response) => {
+            if (error) {
+                console.log(error);
+            } else {
+                const store = this.props.store;
+                store.set('attendingUpcomingEvents')(response.data.upcomingEvents);
+                store.set('attendingPastEvents')(response.data.pastEvents);
+            }
+        });
+    }
 
-    _signOutAsync = async () => {
-        await AsyncStorage.clear();
-        this.props.navigation.navigate('Auth');
-    };
+    navigateToEvent = eventId => {
+        console.log(eventId);
+        // TODO: navigate to event home (general info)
+    }
+
+    navigateToExploreEvents = () => {
+        console.log("exploring");
+        // TODO: navigate to explore events page
+    }
 
     render() {
-        upcomingEvents = [
-            {id: 1, name: 'event 1', date_start: '2018-08-10 00:00:00', date_end: '2018-09-04 00:00:00'},
-            {id: 2, name: 'event 2', date_start: '2018-08-10 00:00:00', date_end: '2018-09-04 00:00:00'},
-            {id: 3, name: 'event 3', date_start: '2018-08-10 00:00:00', date_end: '2018-09-04 00:00:00'},
-        ]
+        /* upcomingEvents = [
+            { id: 1, name: 'hm', date_start: '2018-08-10 00:00:00', date_end: '2018-09-04 00:00:00' },
+            { id: 2, name: 'event 2', date_start: '2018-08-10 00:00:00', date_end: '2018-09-04 00:00:00' },
+            { id: 3, name: 'event 3', date_start: '2018-08-10 00:00:00', date_end: '2018-09-04 00:00:00' },
+        ] */
+        const store = this.props.store;
+        const attendingUpcomingEvents = store.get('attendingUpcomingEvents');
+        const attendingPastEvents = store.get('attendingPastEvents');
 
         return (
             <Container>
@@ -42,7 +61,7 @@ class EventOverview extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Event Overview</Title>
+                        <Title>Events Overview</Title>
                     </Body>
                     <Right />
                 </Header>
@@ -55,32 +74,59 @@ class EventOverview extends React.Component {
                         </Separator>
 
                         {/* TODO: get this from store */}
-                        {upcomingEvents.map(data => {
+                        {attendingUpcomingEvents.map(data => {
                             return (
-                                <ListItem key="data.id">
+                                <ListItem onPress={() => this.navigateToEvent(data.id)} thumbnail key={data.id}>
                                     <Left>
-                                        <Text>icon</Text>
+                                        {/* TODO: get this from media */}
+                                        <Thumbnail square source={{ uri: 'https://www.telegraph.co.uk/content/dam/news/2017/11/22/TELEMMGLPICT000147365976_trans_NvBQzQNjv4Bq3XmyF3YIL3K1caQxZsZv2Ssm-UOV8_Q90I8_c5Af0yY.jpeg?imwidth=450' }} />
                                     </Left>
+
                                     <Body>
-                                        <Text>{data.title}</Text>
-                                        <Text note>{data.description}</Text>
-                                        {/* dates in Text note instead of Right */}
-                                    </Body>
-                                    <Right>
-                                        {/* Detail */}
+                                        <Text>{data.name}</Text>
                                         <Text note>{data.date_start ? `${data.date_start} - ${data.date_end}` : ''}</Text>
+                                    </Body>
+
+                                    <Right>
+                                        <Button transparent icon onPress={() => this.navigateToEvent(data.id)}>
+                                            <Icon name='arrow-forward' />
+                                        </Button>
                                     </Right>
                                 </ListItem>
                             )
                         })}
-
                     </List>
 
+                    <Button style={styles.exploreButton} transparent block onPress={this.navigateToExploreEvents}>
+                        <Text>Find more events to attend!</Text>
+                    </Button>
 
-                    <List>
+                    <List style={styles.pastEvents}>
                         <Separator bordered>
                             <Text>Past Events</Text>
                         </Separator>
+
+                        {attendingPastEvents.map(data => {
+                            return (
+                                <ListItem onPress={() => this.navigateToEvent(data.id)} thumbnail key={data.id}>
+                                    <Left>
+                                        {/* TODO: get this from media */}
+                                        <Thumbnail square source={{ uri: 'https://www.telegraph.co.uk/content/dam/news/2017/11/22/TELEMMGLPICT000147365976_trans_NvBQzQNjv4Bq3XmyF3YIL3K1caQxZsZv2Ssm-UOV8_Q90I8_c5Af0yY.jpeg?imwidth=450' }} />
+                                    </Left>
+
+                                    <Body>
+                                        <Text>{data.name}</Text>
+                                        <Text note>{data.date_start ? `${data.date_start} - ${data.date_end}` : ''}</Text>
+                                    </Body>
+
+                                    <Right>
+                                        <Button transparent icon onPress={() => this.navigateToEvent(data.id)}>
+                                            <Icon name='arrow-forward' />
+                                        </Button>
+                                    </Right>
+                                </ListItem>
+                            )
+                        })}
                     </List>
 
                 </Content>

@@ -8,7 +8,8 @@ export default createConnectedStore({
         last_name: '',
     },
 
-    myEvents: [],
+    attendingUpcomingEvents: [],
+    attendingPastEvents: [],
 
     selectedEvent: {
         id: 0,
