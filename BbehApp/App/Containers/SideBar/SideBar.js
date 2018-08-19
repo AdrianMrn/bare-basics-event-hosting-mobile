@@ -35,14 +35,14 @@ export default class SideBar extends React.Component {
                             <Text>Events Overview</Text>
                         </ListItem>
 
-                        {/* TODO: Render upcoming events from undux store, possibly with some kind of dropdown etc */}
+                        {/* TODO: Render upcoming events from store */}
 
                         <ListItem // Profile
                             button
                             onPress={() => this.props.navigation.navigate('Profile')}
                         >
                             <Text>My Profile</Text>
-                            {/* TODO: icon */}
+                            {/* TODO: profile icon */}
                         </ListItem>
 
                         <ListItem // Sign out
@@ -50,7 +50,7 @@ export default class SideBar extends React.Component {
                             onPress={() => this.props.navigation.navigate('LogOut')}
                         >
                             <Text>Sign Out</Text>
-                            {/* TODO: icon */}
+                            {/* TODO: sign out icon */}
                         </ListItem>
                     </List>
 

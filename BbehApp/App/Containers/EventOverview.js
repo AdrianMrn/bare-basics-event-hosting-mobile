@@ -41,12 +41,13 @@ class EventOverview extends React.Component {
     navigateToEvent = eventData => {
         console.log(eventData);
         this.props.store.set('selectedEvent')(eventData);
-        // TODO: navigate to event home (general info)
+        this.props.navigation.navigate('GeneralInfo');
     }
 
     navigateToExploreEvents = () => {
         console.log("exploring");
         // TODO: navigate to explore events page
+
     }
 
     render() {
@@ -77,7 +78,7 @@ class EventOverview extends React.Component {
                             <Text style={styles.separatorText}>UPCOMING EVENTS</Text>
                         </Separator>
 
-                        {!attendingUpcomingEvents.length && <ActivityIndicator size="large" />}
+                        {!attendingUpcomingEvents.length && <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />}
                         {!!attendingUpcomingEvents && attendingUpcomingEvents.map(data => {
                             return (
                                 <Event data={data} navigateToEvent={this.navigateToEvent} key={data.id} />
@@ -94,7 +95,7 @@ class EventOverview extends React.Component {
                             <Text style={styles.separatorText}>PAST EVENTS</Text>
                         </Separator>
 
-                        {!attendingPastEvents.length && <ActivityIndicator size="large" />}
+                        {!attendingPastEvents.length && <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />}
                         {!!attendingPastEvents && attendingPastEvents.map(data => {
                             return (
                                 <Event data={data} navigateToEvent={this.navigateToEvent} key={data.id} />

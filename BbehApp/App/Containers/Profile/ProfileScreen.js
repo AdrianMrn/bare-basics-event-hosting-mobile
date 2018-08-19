@@ -19,8 +19,8 @@ class ProfileScreen extends React.Component {
     this.state = {
       first_name: '',
       last_name: '',
-      email: '',
-      // other infos
+      description: '',
+      // other infos, social links, IMAGE, ...
 
       loading: false,
     }

@@ -3,6 +3,7 @@ const colors = {
   offWhite: '#f8f8f8',
   clear: 'rgba(0,0,0,0)',
   facebook: '#3b5998',
+  blueish: '#3F51B5',
   transparent: 'rgba(0,0,0,0)',
   silver: '#F7F7F7',
   steel: '#CCCCCC',

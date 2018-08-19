@@ -7,6 +7,7 @@ export default class Event extends Component {
         const data = this.props.data;
         return (
             <ListItem onPress={() => this.props.navigateToEvent(data)} thumbnail>
+            {/* TODO: turn these into cards for aesthetic? */}
                 <Left>
                     {/* TODO: get this from media */}
                     <Thumbnail square source={{ uri: 'https://www.telegraph.co.uk/content/dam/news/2017/11/22/TELEMMGLPICT000147365976_trans_NvBQzQNjv4Bq3XmyF3YIL3K1caQxZsZv2Ssm-UOV8_Q90I8_c5Af0yY.jpeg?imwidth=450' }} />
@@ -14,7 +15,7 @@ export default class Event extends Component {
 
                 <Body>
                     <Text>{data.name}</Text>
-                    <Text note>{data.date_start ? `${moment(data.date_start).format('Do MMM')} - ${moment(data.date_end).format('Do MMM')}` : ''}</Text>
+                    <Text note>{data.date_start ? `${moment(data.date_start).format('Do MMM')} - ${moment(data.date_end).format('Do MMM YYYY')}` : ''}</Text>
                 </Body>
 
                 <Right>

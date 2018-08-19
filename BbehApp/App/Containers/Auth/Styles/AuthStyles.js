@@ -25,7 +25,7 @@ export default StyleSheet.create({
   },
   registerText: {
     ...Fonts.style.normal,
-    color: Colors.facebook,
+    color: Colors.blueish,
     marginTop: Metrics.doubleBaseMargin
   }
 })
