@@ -24,7 +24,7 @@ export default class LogOutScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator />
+        <ActivityIndicator size="large" />
         <StatusBar barStyle="default" />
       </View>
     );

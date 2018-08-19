@@ -5,15 +5,23 @@ import {
     StatusBar,
     StyleSheet,
 } from 'react-native';
-import moment from 'moment';
 import { Container, Header, Title, Left, Icon, Right, Thumbnail, Button, Body, Content, Text, Card, CardItem, List, ListItem, Separator } from "native-base";
 
 import Store from '../../Services/Store';
 import { apiFetchAttendingEvents } from '../../../App/Services/Api';
 
+import Event from '../../Components/Event';
+
 import styles from './Styles/EventOverviewStyles';
 
 class EventOverview extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            loading: true,
+        }
+    }
+
     componentDidMount = () => {
         this.fetchAttendingEvents();
     }
@@ -41,11 +49,6 @@ class EventOverview extends React.Component {
     }
 
     render() {
-        /* upcomingEvents = [
-            { id: 1, name: 'hm', date_start: '2018-08-10 00:00:00', date_end: '2018-09-04 00:00:00' },
-            { id: 2, name: 'event 2', date_start: '2018-08-10 00:00:00', date_end: '2018-09-04 00:00:00' },
-            { id: 3, name: 'event 3', date_start: '2018-08-10 00:00:00', date_end: '2018-09-04 00:00:00' },
-        ] */
         const store = this.props.store;
         const attendingUpcomingEvents = store.get('attendingUpcomingEvents');
         const attendingPastEvents = store.get('attendingPastEvents');
@@ -66,33 +69,17 @@ class EventOverview extends React.Component {
                     <Right />
                 </Header>
 
-                <Content padder>
+                <Content>
 
                     <List>
                         <Separator bordered>
-                            <Text>Upcoming Events</Text>
+                            <Text style={{ fontSize: 17 }}>Upcoming Events</Text>
                         </Separator>
 
-                        {/* TODO: get this from store */}
-                        {attendingUpcomingEvents.map(data => {
+                        {!attendingUpcomingEvents.length && <ActivityIndicator size="large" />}
+                        {!!attendingUpcomingEvents && attendingUpcomingEvents.map(data => {
                             return (
-                                <ListItem onPress={() => this.navigateToEvent(data.id)} thumbnail key={data.id}>
-                                    <Left>
-                                        {/* TODO: get this from media */}
-                                        <Thumbnail square source={{ uri: 'https://www.telegraph.co.uk/content/dam/news/2017/11/22/TELEMMGLPICT000147365976_trans_NvBQzQNjv4Bq3XmyF3YIL3K1caQxZsZv2Ssm-UOV8_Q90I8_c5Af0yY.jpeg?imwidth=450' }} />
-                                    </Left>
-
-                                    <Body>
-                                        <Text>{data.name}</Text>
-                                        <Text note>{data.date_start ? `${data.date_start} - ${data.date_end}` : ''}</Text>
-                                    </Body>
-
-                                    <Right>
-                                        <Button transparent icon onPress={() => this.navigateToEvent(data.id)}>
-                                            <Icon name='arrow-forward' />
-                                        </Button>
-                                    </Right>
-                                </ListItem>
+                                <Event data={data} navigateToEvent={this.navigateToEvent} key={data.id} />
                             )
                         })}
                     </List>
@@ -103,28 +90,13 @@ class EventOverview extends React.Component {
 
                     <List style={styles.pastEvents}>
                         <Separator bordered>
-                            <Text>Past Events</Text>
+                            <Text style={{ fontSize: 17 }}>Past Events</Text>
                         </Separator>
 
-                        {attendingPastEvents.map(data => {
+                        {!attendingPastEvents.length && <ActivityIndicator size="large" />}
+                        {!!attendingPastEvents && attendingPastEvents.map(data => {
                             return (
-                                <ListItem onPress={() => this.navigateToEvent(data.id)} thumbnail key={data.id}>
-                                    <Left>
-                                        {/* TODO: get this from media */}
-                                        <Thumbnail square source={{ uri: 'https://www.telegraph.co.uk/content/dam/news/2017/11/22/TELEMMGLPICT000147365976_trans_NvBQzQNjv4Bq3XmyF3YIL3K1caQxZsZv2Ssm-UOV8_Q90I8_c5Af0yY.jpeg?imwidth=450' }} />
-                                    </Left>
-
-                                    <Body>
-                                        <Text>{data.name}</Text>
-                                        <Text note>{data.date_start ? `${data.date_start} - ${data.date_end}` : ''}</Text>
-                                    </Body>
-
-                                    <Right>
-                                        <Button transparent icon onPress={() => this.navigateToEvent(data.id)}>
-                                            <Icon name='arrow-forward' />
-                                        </Button>
-                                    </Right>
-                                </ListItem>
+                                <Event data={data} navigateToEvent={this.navigateToEvent} key={data.id} />
                             )
                         })}
                     </List>
