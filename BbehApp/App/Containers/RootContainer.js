@@ -9,7 +9,7 @@ import AuthLoadingScreen from './Auth/AuthLoadingScreen';
 import SignInScreen from './Auth/SignInScreen';
 import LogOutScreen from './Auth/LogOutScreen';
 import RegisterScreen from './Auth/RegisterScreen';
-import EventOverview from './App/EventOverview';
+import EventOverview from './EventOverview';
 import ProfileScreen from './Profile/ProfileScreen';
 
 import SideBar from "./SideBar/SideBar.js";
@@ -21,7 +21,7 @@ export default class RootContainer extends Component {
   });
 
   AppStack = createDrawerNavigator({
-    Home: EventOverview,
+    EventOverview: EventOverview,
     /*Other: OtherScreen */
     Profile: ProfileScreen,
     LogOut: LogOutScreen

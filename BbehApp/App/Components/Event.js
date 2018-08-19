@@ -6,7 +6,7 @@ export default class Event extends Component {
     render() {
         const data = this.props.data;
         return (
-            <ListItem onPress={() => this.props.navigateToEvent(data.id)} thumbnail>
+            <ListItem onPress={() => this.props.navigateToEvent(data)} thumbnail>
                 <Left>
                     {/* TODO: get this from media */}
                     <Thumbnail square source={{ uri: 'https://www.telegraph.co.uk/content/dam/news/2017/11/22/TELEMMGLPICT000147365976_trans_NvBQzQNjv4Bq3XmyF3YIL3K1caQxZsZv2Ssm-UOV8_Q90I8_c5Af0yY.jpeg?imwidth=450' }} />
@@ -18,7 +18,7 @@ export default class Event extends Component {
                 </Body>
 
                 <Right>
-                    <Button transparent icon onPress={() => this.props.navigateToEvent(data.id)}>
+                    <Button transparent icon onPress={() => this.props.navigateToEvent(data)}>
                         <Icon name='arrow-forward' />
                     </Button>
                 </Right>

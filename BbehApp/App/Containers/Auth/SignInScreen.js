@@ -10,7 +10,7 @@ import {
 import { Container, Header, Content, Form, Item, Input, Button, Text } from 'native-base';
 
 import Store from '../../Services/Store';
-import { apiLogin } from '../../../App/Services/Api';
+import { apiLogin } from '../../Services/Api';
 
 import styles from './Styles/AuthStyles'
 

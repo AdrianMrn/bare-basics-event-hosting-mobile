@@ -1,7 +1,6 @@
 import React from "react";
 import { Image, StatusBar } from "react-native";
 import { Container, Content, Text, List, ListItem } from "native-base";
-const routes = ["Home", "Profile", "LogOut"];
 
 export default class SideBar extends React.Component {
     render() {
@@ -29,9 +28,9 @@ export default class SideBar extends React.Component {
                     </Image> */}
 
                     <List>
-                        <ListItem // Home
+                        <ListItem // EventOverview
                             button
-                            onPress={() => this.props.navigation.navigate('Home')}
+                            onPress={() => this.props.navigation.navigate('EventOverview')}
                         >
                             <Text>Events Overview</Text>
                         </ListItem>

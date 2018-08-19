@@ -7,10 +7,10 @@ import {
 } from 'react-native';
 import { Container, Header, Title, Left, Icon, Right, Thumbnail, Button, Body, Content, Text, Card, CardItem, List, ListItem, Separator } from "native-base";
 
-import Store from '../../Services/Store';
-import { apiFetchAttendingEvents } from '../../../App/Services/Api';
+import Store from '../Services/Store';
+import { apiFetchAttendingEvents } from '../Services/Api';
 
-import Event from '../../Components/Event';
+import Event from '../Components/Event';
 
 import styles from './Styles/EventOverviewStyles';
 
@@ -38,8 +38,9 @@ class EventOverview extends React.Component {
         });
     }
 
-    navigateToEvent = eventId => {
-        console.log(eventId);
+    navigateToEvent = eventData => {
+        console.log(eventData);
+        this.props.store.set('selectedEvent')(eventData);
         // TODO: navigate to event home (general info)
     }
 
@@ -72,8 +73,8 @@ class EventOverview extends React.Component {
                 <Content>
 
                     <List>
-                        <Separator bordered>
-                            <Text style={{ fontSize: 17 }}>Upcoming Events</Text>
+                        <Separator style={styles.separator} bordered>
+                            <Text style={styles.separatorText}>UPCOMING EVENTS</Text>
                         </Separator>
 
                         {!attendingUpcomingEvents.length && <ActivityIndicator size="large" />}
@@ -89,8 +90,8 @@ class EventOverview extends React.Component {
                     </Button>
 
                     <List style={styles.pastEvents}>
-                        <Separator bordered>
-                            <Text style={{ fontSize: 17 }}>Past Events</Text>
+                        <Separator style={styles.separator} bordered>
+                            <Text style={styles.separatorText}>PAST EVENTS</Text>
                         </Separator>
 
                         {!attendingPastEvents.length && <ActivityIndicator size="large" />}

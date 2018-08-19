@@ -9,7 +9,7 @@ import {
 import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text } from 'native-base';
 
 import Store from '../../Services/Store';
-import { } from '../../../App/Services/Api';
+import { } from '../../Services/Api';
 
 import styles from './Styles/ProfileStyles';
 

@@ -29,7 +29,7 @@ export default createConnectedStore({
 
     selectedEventSessions: [],
     selectedEventSpeakers: [],
-
-    //selectedEventSponsors: [],
+    selectedEventAttendees: [],
+    selectedEventSponsors: [],
 
 });
