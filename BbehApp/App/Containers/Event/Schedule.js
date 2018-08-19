@@ -9,12 +9,27 @@ import {
 import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text } from 'native-base';
 
 import Store from '../../Services/Store';
-import { } from '../../Services/Api';
+import { apiGetEventExtraDetails } from '../../Services/Api';
 
 import styles from './Styles/EventStyles';
 
 class Schedule extends React.Component {
+  componentDidMount() {
+    const store = this.props.store;
+    const selectedEvent = store.get('selectedEvent');
+    apiGetEventExtraDetails('sessions', selectedEvent.id, (error, response) => {
+      if (error) {
+        console.log(error);
+        // TODO: toast error
+      } else {
+        store.set('selectedEventSessions')(response.data);
+        console.log(response.data);
+      }
+    })
+  }
+
   render() {
+    const selectedEventSessions = this.props.store.get('selectedEventSessions');
     return (
       <Container>
         <Header>
@@ -33,6 +48,7 @@ class Schedule extends React.Component {
 
         <Content padder>
           <Text>Schedule</Text>
+          {/* TODO: display sessions by date */}
         </Content>
       </Container>
     );

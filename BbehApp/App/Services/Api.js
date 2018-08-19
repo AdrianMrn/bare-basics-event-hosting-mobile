@@ -60,3 +60,15 @@ export async function apiFetchAttendingEvents(next) {
       next(error);
     });
 }
+
+export async function apiGetEventExtraDetails(type, eventId, next) {
+  const accessToken = await setAccessToken();
+
+  axios.get(`${apiUrl}/eventinfo/${type}/${eventId}`)
+      .then(response => {
+          next(false, response);
+      })
+      .catch(error => {
+          next(error);
+      });
+}
