@@ -32,7 +32,6 @@ class Attendees extends React.Component {
         // TODO: toast error
       } else {
         store.set('selectedEventAttendees')(response.data);
-        console.log(response.data);
       }
       this.setState({ loading: false });
     });

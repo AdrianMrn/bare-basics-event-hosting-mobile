@@ -6,35 +6,31 @@ export default StyleSheet.create({
         paddingLeft: Metrics.baseMargin,
         paddingRight: Metrics.baseMargin
     },
-    eventName: {
-        ...Fonts.style.h5,
-        marginLeft: Metrics.baseMargin,
-        flex: 1,
-        flexWrap: 'wrap',
-    },
-    eventDate: {
-        marginTop: Metrics.baseMargin,
-    },
     mainInfo: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
     },
-    eventDescription: {
+    nameAndDesc: {
+        flex: 1,
+        marginLeft: Metrics.doubleBaseMargin,
+        flexWrap: 'wrap',
+    },
+    userName: {
+        ...Fonts.style.h5,
+    },
+    userPosition: {
+        marginTop: Metrics.baseMargin,
+    },
+    userDescription: {
         ...Fonts.style.description,
         marginTop: Metrics.doubleBaseMargin,
     },
-    navCardContainer: {
+    socialLinks: {
+        marginTop: Metrics.baseMargin,
         flex: 1,
-        flexWrap: 'wrap',
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: Metrics.doubleBaseMargin,
-    },
-    renderViewText: {
-        ...Fonts.style.description,
-        color: Colors.blueish
-    },
-    
+    }
 
 })

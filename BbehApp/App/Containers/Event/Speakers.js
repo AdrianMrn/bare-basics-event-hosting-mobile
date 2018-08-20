@@ -32,7 +32,6 @@ class Speakers extends React.Component {
         // TODO: toast error
       } else {
         store.set('selectedEventSpeakers')(response.data);
-        console.log(response.data);
       }
       this.setState({ loading: false });
     });

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text } from 'native-base';
+import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, Thumbnail } from 'native-base';
 import moment from 'moment';
 import ViewMoreText from 'react-native-view-more-text';
 
@@ -15,6 +15,7 @@ import Store from '../../Services/Store';
 import { } from '../../Services/Api';
 
 import NavCard from '../../Components/NavCard';
+import Divider from '../../Components/Divider';
 
 import styles from './Styles/EventStyles';
 
@@ -49,9 +50,17 @@ class GeneralInfo extends React.Component {
         </Header>
 
         <Content padder style={styles.content}>
-          {/* TODO: event logo */}
-          <Text style={styles.eventName}>{event.name}</Text>
+          <View style={styles.mainInfo}>
+            {/* TODO: get media */}
+            <Thumbnail square large source={{ uri: 'https://www.telegraph.co.uk/content/dam/news/2017/11/22/TELEMMGLPICT000147365976_trans_NvBQzQNjv4Bq3XmyF3YIL3K1caQxZsZv2Ssm-UOV8_Q90I8_c5Af0yY.jpeg?imwidth=450' }} />
+            <Text style={styles.eventName}>{event.name}</Text>
+          </View>
+
           <Text style={styles.eventDate} note>{event.date_start ? `${moment(event.date_start).format('Do MMM')} - ${moment(event.date_end).format('Do MMM YYYY')}` : ''}</Text>
+
+
+          <Divider marginTop={10} />
+
           {event.address &&
             <Button style={{ marginVertical: 15 }} transparent iconLeft>
               {/* TODO: (in web & backend, get coordinates or goo.gl url and link to this) */}
@@ -68,10 +77,10 @@ class GeneralInfo extends React.Component {
           </ViewMoreText>
 
           <View style={styles.navCardContainer}>
-            <NavCard iconName={'chatbubbles'} navigate={() => {this.props.navigation.navigate('Speakers')}} title={'SPEAKERS'} />
-            <NavCard iconName={'calendar'} navigate={() => {this.props.navigation.navigate('Schedule')}} title={'SCHEDULE'} />
-            <NavCard iconName={'people'} navigate={() => {this.props.navigation.navigate('Attendees')}} title={'ATTENDEES'} />
-            <NavCard iconName={'medal'} navigate={() => {this.props.navigation.navigate('Sponsors')}} title={'SPONSORS'} />
+            <NavCard iconName={'chatbubbles'} navigate={() => { this.props.navigation.navigate('Speakers') }} title={'SPEAKERS'} />
+            <NavCard iconName={'calendar'} navigate={() => { this.props.navigation.navigate('Schedule') }} title={'SCHEDULE'} />
+            <NavCard iconName={'people'} navigate={() => { this.props.navigation.navigate('Attendees') }} title={'ATTENDEES'} />
+            <NavCard iconName={'medal'} navigate={() => { this.props.navigation.navigate('Sponsors') }} title={'SPONSORS'} />
           </View>
 
 

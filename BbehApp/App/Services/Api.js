@@ -65,10 +65,22 @@ export async function apiGetEventExtraDetails(type, eventId, next) {
   const accessToken = await setAccessToken();
 
   axios.get(`${apiUrl}/eventinfo/${type}/${eventId}`)
-      .then(response => {
-          next(false, response);
-      })
-      .catch(error => {
-          next(error);
-      });
+    .then(response => {
+      next(false, response);
+    })
+    .catch(error => {
+      next(error);
+    });
+}
+
+export async function apiGetUserProfile(userId, next) {
+  const accessToken = await setAccessToken();
+
+  axios.get(`${apiUrl}/get-user-profile/${userId}`)
+    .then(response => {
+      next(false, response);
+    })
+    .catch(error => {
+      next(error);
+    });
 }

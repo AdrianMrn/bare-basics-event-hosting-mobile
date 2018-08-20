@@ -41,7 +41,6 @@ class EventOverview extends React.Component {
     }
 
     navigateToEvent = eventData => {
-        console.log(eventData);
         this.props.store.set('selectedEvent')(eventData);
         this.props.navigation.navigate('GeneralInfo');
     }
