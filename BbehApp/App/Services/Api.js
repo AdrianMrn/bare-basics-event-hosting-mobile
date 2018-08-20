@@ -84,3 +84,15 @@ export async function apiGetUserProfile(userId, next) {
       next(error);
     });
 }
+
+export async function apiGetSessionSpeakers(sessionId, next) {
+  const accessToken = await setAccessToken();
+
+  axios.get(`${apiUrl}/get-session-speakers/${sessionId}`)
+    .then(response => {
+      next(false, response);
+    })
+    .catch(error => {
+      next(error);
+    });
+}

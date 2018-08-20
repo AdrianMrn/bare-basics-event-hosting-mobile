@@ -6,14 +6,23 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text } from 'native-base';
+import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, List } from 'native-base';
 
 import Store from '../../Services/Store';
 import { apiGetEventExtraDetails } from '../../Services/Api';
 
+import Session from '../../Components/Session';
+
 import styles from './Styles/EventStyles';
 
 class Schedule extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      loading: true,
+    }
+  }
+
   componentDidMount() {
     const store = this.props.store;
     const selectedEvent = store.get('selectedEvent');
@@ -23,9 +32,14 @@ class Schedule extends React.Component {
         // TODO: toast error
       } else {
         store.set('selectedEventSessions')(response.data);
-        console.log(response.data);
       }
-    })
+      this.setState({ loading: false });
+    });
+  }
+
+  navigateToDetail = data => {
+    this.props.store.set('selectedSession')(data);
+    this.props.navigation.navigate('SessionDetail');
   }
 
   render() {
@@ -47,8 +61,15 @@ class Schedule extends React.Component {
         </Header>
 
         <Content padder>
-          <Text>Schedule</Text>
-          {/* TODO: display sessions by date */}
+          <List>
+            {this.state.loading && <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />}
+            {!this.state.loading && selectedEventSessions.map(data => {
+              return (
+                <Session data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
+              )
+            })}
+          </List>
+          {/* TODO: display sessions by day & sort by time */}
         </Content>
       </Container>
     );

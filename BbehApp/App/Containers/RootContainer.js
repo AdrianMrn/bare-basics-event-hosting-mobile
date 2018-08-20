@@ -19,6 +19,7 @@ import Speakers from './Event/Speakers';
 import Sponsors from './Event/Sponsors';
 import SponsorProfile from './Event/SponsorProfile';
 import UserProfile from './Event/UserProfile';
+import SessionDetail from './Event/SessionDetail';
 
 import SideBar from "./SideBar/SideBar.js";
 
@@ -31,15 +32,15 @@ export default class RootContainer extends Component {
   AppStack = createDrawerNavigator({
     EventOverview: EventOverview,
 
-    GeneralInfo: GeneralInfo,
-    Attendees: Attendees,
-    Schedule: Schedule,
-    Speakers: Speakers,
-    Sponsors: Sponsors,
+    GeneralInfo,
+    Attendees,
+    Schedule,
+    Speakers,
+    Sponsors,
+    SessionDetail,
+    SponsorProfile,
+    UserProfile,
 
-    SponsorProfile: SponsorProfile,
-    UserProfile: UserProfile,
-    
     MyProfile: ProfileScreen,
     LogOut: LogOutScreen
   }, {
