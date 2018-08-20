@@ -69,6 +69,7 @@ class SignInScreen extends React.Component {
                 value={state.email}
                 placeholder="E-Mail"
                 style={styles.authInput}
+                disabled={state.loading}
               />
             </Item>
             <Item regular>
@@ -78,6 +79,7 @@ class SignInScreen extends React.Component {
                 value={state.first_name}
                 placeholder="First name"
                 style={styles.authInput}
+                disabled={state.loading}
               />
             </Item>
             <Item regular>
@@ -87,6 +89,7 @@ class SignInScreen extends React.Component {
                 value={state.last_name}
                 placeholder="Last name"
                 style={styles.authInput}
+                disabled={state.loading}
               />
             </Item>
             <Item regular>
@@ -96,10 +99,12 @@ class SignInScreen extends React.Component {
                 placeholder="Password"
                 style={styles.authInput}
                 secureTextEntry
+                disabled={state.loading}
               />
             </Item>
             <Button onPress={this.onPressRegister} disabled={state.loading ? true: false} success={state.loading ? false : true} block style={styles.authButton}>
               <Text>Register</Text>
+              {/* TODO: ActivityIndicator on loading */}
             </Button>
             <TouchableOpacity disabled={state.loading} onPress={this.onPressLoginText}>
               <Text style={styles.registerText}>Already have an account? Log in here</Text>

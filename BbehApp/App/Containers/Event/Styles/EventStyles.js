@@ -9,8 +9,11 @@ export default StyleSheet.create({
     eventName: {
         ...Fonts.style.h5,
     },
+    eventDate: {
+        marginTop: Metrics.baseMargin
+    },
     eventDescription: {
-        ...Fonts.style.normal,
+        ...Fonts.style.description,
         marginTop: Metrics.doubleBaseMargin,
     },
     navCardContainer: {
@@ -21,7 +24,7 @@ export default StyleSheet.create({
         marginTop: Metrics.doubleBaseMargin,
     },
     renderViewText: {
-        ...Fonts.style.norma,
+        ...Fonts.style.description,
         color: Colors.blueish
     }
 

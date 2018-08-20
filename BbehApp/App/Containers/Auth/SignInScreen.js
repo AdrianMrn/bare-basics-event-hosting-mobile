@@ -65,6 +65,7 @@ class SignInScreen extends React.Component {
                 value={state.email}
                 placeholder="E-Mail"
                 style={styles.authInput}
+                disabled={state.loading}
               />
             </Item>
             <Item regular>
@@ -74,10 +75,12 @@ class SignInScreen extends React.Component {
                 placeholder="Password"
                 style={styles.authInput}
                 secureTextEntry
+                disabled={state.loading}
               />
             </Item>
             <Button onPress={this.onPressLogin} block disabled={state.loading ? true: false} success={state.loading ? false : true} style={styles.authButton}>
               <Text>Sign in</Text>
+              {/* TODO: ActivityIndicator on loading */}
             </Button>
             <TouchableOpacity disabled={state.loading} onPress={this.onPressRegisterText}>
               <Text style={styles.registerText}>New to BBEvents? Register here</Text>

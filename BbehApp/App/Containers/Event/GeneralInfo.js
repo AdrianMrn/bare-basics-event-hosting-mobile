@@ -21,12 +21,12 @@ import styles from './Styles/EventStyles';
 class GeneralInfo extends React.Component {
   renderViewMore(onPress) {
     return (
-      <Text style={styles.renderViewText} onPress={onPress}>Read more</Text>
+      <Text style={styles.renderViewText} onPress={onPress}>Show more</Text>
     )
   }
   renderViewLess(onPress) {
     return (
-      <Text style={styles.renderViewText} onPress={onPress}>Read more</Text>
+      <Text style={styles.renderViewText} onPress={onPress}>Show less</Text>
     )
   }
 
@@ -51,7 +51,7 @@ class GeneralInfo extends React.Component {
         <Content padder style={styles.content}>
           {/* TODO: event logo */}
           <Text style={styles.eventName}>{event.name}</Text>
-          <Text note>{event.date_start ? `${moment(event.date_start).format('Do MMM')} - ${moment(event.date_end).format('Do MMM YYYY')}` : ''}</Text>
+          <Text style={styles.eventDate} note>{event.date_start ? `${moment(event.date_start).format('Do MMM')} - ${moment(event.date_end).format('Do MMM YYYY')}` : ''}</Text>
           {event.address &&
             <Button style={{ marginVertical: 15 }} transparent iconLeft>
               {/* TODO: (in web & backend, get coordinates or goo.gl url and link to this) */}
