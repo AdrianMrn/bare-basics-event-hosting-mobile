@@ -39,7 +39,7 @@ export default class SideBar extends React.Component {
 
                         <ListItem // Profile
                             button
-                            onPress={() => this.props.navigation.navigate('Profile')}
+                            onPress={() => this.props.navigation.navigate('MyProfile')}
                         >
                             <Text>My Profile</Text>
                             {/* TODO: profile icon */}

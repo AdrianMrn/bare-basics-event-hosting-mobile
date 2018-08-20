@@ -30,11 +30,13 @@ class EventOverview extends React.Component {
         apiFetchAttendingEvents((error, response) => {
             if (error) {
                 console.log(error);
+                // TODO: toast error
             } else {
                 const store = this.props.store;
                 store.set('attendingUpcomingEvents')(response.data.upcomingEvents);
                 store.set('attendingPastEvents')(response.data.pastEvents);
             }
+            this.setState({ loading: false });
         });
     }
 
@@ -78,8 +80,8 @@ class EventOverview extends React.Component {
                             <Text style={styles.separatorText}>UPCOMING EVENTS</Text>
                         </Separator>
 
-                        {!attendingUpcomingEvents.length && <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />}
-                        {!!attendingUpcomingEvents && attendingUpcomingEvents.map(data => {
+                        {this.state.loading && <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />}
+                        {!this.state.loading && attendingUpcomingEvents.map(data => {
                             return (
                                 <Event data={data} navigateToEvent={this.navigateToEvent} key={data.id} />
                             )
@@ -95,8 +97,8 @@ class EventOverview extends React.Component {
                             <Text style={styles.separatorText}>PAST EVENTS</Text>
                         </Separator>
 
-                        {!attendingPastEvents.length && <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />}
-                        {!!attendingPastEvents && attendingPastEvents.map(data => {
+                        {this.state.loading && <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />}
+                        {!this.state.loading && attendingPastEvents.map(data => {
                             return (
                                 <Event data={data} navigateToEvent={this.navigateToEvent} key={data.id} />
                             )

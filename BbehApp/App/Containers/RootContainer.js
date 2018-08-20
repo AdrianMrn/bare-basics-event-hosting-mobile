@@ -17,6 +17,8 @@ import Attendees from './Event/Attendees';
 import Schedule from './Event/Schedule';
 import Speakers from './Event/Speakers';
 import Sponsors from './Event/Sponsors';
+import SponsorProfile from './Event/SponsorProfile';
+import UserProfile from './Event/UserProfile';
 
 import SideBar from "./SideBar/SideBar.js";
 
@@ -34,8 +36,11 @@ export default class RootContainer extends Component {
     Schedule: Schedule,
     Speakers: Speakers,
     Sponsors: Sponsors,
+
+    SponsorProfile: SponsorProfile,
+    UserProfile: UserProfile,
     
-    Profile: ProfileScreen,
+    MyProfile: ProfileScreen,
     LogOut: LogOutScreen
   }, {
       contentComponent: props => <SideBar {...props} />

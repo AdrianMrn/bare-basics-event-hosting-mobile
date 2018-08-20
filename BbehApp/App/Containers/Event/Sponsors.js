@@ -7,14 +7,23 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text } from 'native-base';
+import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, List } from 'native-base';
 
 import Store from '../../Services/Store';
 import { apiGetEventExtraDetails } from '../../Services/Api';
 
+import ListItemDetail from '../../Components/ListItemDetail';
+
 import styles from './Styles/EventStyles';
 
 class Sponsors extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      loading: true,
+    }
+  }
+
   componentDidMount() {
     const store = this.props.store;
     const selectedEvent = store.get('selectedEvent');
@@ -26,7 +35,13 @@ class Sponsors extends React.Component {
         store.set('selectedEventSponsors')(response.data);
         console.log(response.data);
       }
-    })
+      this.setState({ loading: false });
+    });
+  }
+
+  navigateToDetail = data => {
+    this.props.store.set('selectedSponsor')(data);
+    this.props.navigation.navigate('SponsorProfile');
   }
 
   render() {
@@ -48,8 +63,15 @@ class Sponsors extends React.Component {
         </Header>
 
         <Content padder>
-          <Text>Sponsors</Text>
-          {/* TODO: map through sponsors by tier (gold silver bronze) */}
+          <List>
+            {/* TODO: sort sponsors by tier (gold silver bronze -> <Separator />) */}
+            {this.state.loading && <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />}
+            {!this.state.loading && selectedEventSponsors.map(data => {
+              return (
+                <ListItemDetail data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
+              )
+            })}
+          </List>
         </Content>
       </Container>
     );

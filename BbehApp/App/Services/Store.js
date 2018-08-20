@@ -27,6 +27,9 @@ export default createConnectedStore({
         is_published: false,
     },
 
+    selectedUser: {},
+    selectedSponsor: {},
+
     selectedEventSessions: [],
     selectedEventSpeakers: [],
     selectedEventAttendees: [],
