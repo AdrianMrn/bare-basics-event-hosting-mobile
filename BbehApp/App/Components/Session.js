@@ -6,7 +6,6 @@ import moment from 'moment';
 export default class Session extends Component {
     render() {
         const data = this.props.data;
-        console.log(data);
         return (
             <ListItem style={{ justifyContent: 'space-between', flexDirection: 'row' }} onPress={() => this.props.navigateToDetail(data)} thumbnail>
                 <View>

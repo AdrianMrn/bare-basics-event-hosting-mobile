@@ -35,6 +35,5 @@ export default StyleSheet.create({
         ...Fonts.style.description,
         color: Colors.blueish
     },
-    
 
 })
