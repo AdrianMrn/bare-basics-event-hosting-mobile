@@ -68,13 +68,14 @@ class Schedule extends React.Component {
           otherwise we're setting selectedDay to the first day of the event and not scrolling. */
         const selectedDay = this.props.navigation.getParam('selectedDay', undefined);
         if (selectedDay) {
-          const dayIndex = this.props.navigation.getParam('selectedDayIndex', undefined)
-          this.setState({ selectedDay });
+          const selectedDayIndex = this.props.navigation.getParam('selectedDayIndex', undefined)
+          this.setState({ selectedDay, selectedDayIndex });
           this.props.navigation.setParams({ selectedDay: undefined, selectedDayIndex: undefined });
 
           const { width } = Dimensions.get('window')
           setTimeout(() => {
-            this._dayScrollView.scrollTo({ x: (dayIndex * 71.5) - (width / 2) + (71.5 / 2) });
+            const buttonWidth = 62.8; // Hardcoded
+            this._dayScrollView.scrollTo({ x: (selectedDayIndex * buttonWidth) - (width / 2) + (buttonWidth / 2) });
           }, 250); /* TODO: Find a way to scroll when the dayScrollView has rendered instead of using an unreliable timeout */
         } else {
           this.setState({ selectedDay: firstDay });

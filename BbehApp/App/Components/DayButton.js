@@ -9,7 +9,7 @@ export default class DayButton extends Component {
         const { day, setActiveDay, dayIndex, active } = this.props;
         return (
             <Button onPress={() => setActiveDay(day, dayIndex)} style={styles.dateButton} transparent={!active} primary={active}>
-                <Text>{day.format('ddd')}</Text>
+                <Text style={styles.dayText}>{day.format('ddd')}</Text>
                 <Text>{day.format('D')}</Text>
             </Button>
         )

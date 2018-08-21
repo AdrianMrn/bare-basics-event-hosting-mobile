@@ -5,6 +5,9 @@ export default StyleSheet.create({
     dateButton: {
         flexDirection: 'column',
         justifyContent: 'space-around',
-        marginHorizontal: 6,
+        marginHorizontal: 7,
+    },
+    dayText: {
+        fontSize: 9
     },
 })
