@@ -107,9 +107,9 @@ class SignInScreen extends React.Component {
                 disabled={state.loading}
               />
             </Item>
-            <Button onPress={this.onPressRegister} disabled={state.loading ? true: false} success={state.loading ? false : true} block style={styles.authButton}>
+            <Button onPress={this.onPressRegister} disabled={state.loading ? true : false} success={state.loading ? false : true} block style={styles.authButton}>
+              {state.loading && <ActivityIndicator size="small" color="#fff" />}
               <Text>Register</Text>
-              {/* TODO: ActivityIndicator on loading */}
             </Button>
             <TouchableOpacity disabled={state.loading} onPress={this.onPressLoginText}>
               <Text style={styles.registerText}>Already have an account? Log in here</Text>

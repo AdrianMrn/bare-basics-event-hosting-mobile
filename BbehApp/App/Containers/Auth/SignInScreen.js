@@ -36,7 +36,7 @@ class SignInScreen extends React.Component {
 
   onPressLogin = () => {
     this.setState({ loading: true });
-    // TODO: form validation (especially email)
+    // TODO: form validation (especially email) with toast errors
     const state = this.state;
     apiLogin({
       email: state.email,
@@ -83,8 +83,8 @@ class SignInScreen extends React.Component {
               />
             </Item>
             <Button onPress={this.onPressLogin} block disabled={state.loading ? true : false} success={state.loading ? false : true} style={styles.authButton}>
+              {state.loading && <ActivityIndicator size="small" color="#fff" />}
               <Text>Sign in</Text>
-              {/* TODO: ActivityIndicator on loading */}
             </Button>
             <TouchableOpacity disabled={state.loading} onPress={this.onPressRegisterText}>
               <Text style={styles.registerText}>New to BBEvents? Register here</Text>
