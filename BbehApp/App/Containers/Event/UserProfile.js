@@ -8,7 +8,7 @@ import {
   View,
   Linking
 } from 'react-native';
-import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, Thumbnail } from 'native-base';
+import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, Thumbnail, Toast } from 'native-base';
 
 import Store from '../../Services/Store';
 import { apiGetUserProfile } from '../../Services/Api';
@@ -41,8 +41,12 @@ class ProfileScreen extends React.Component {
   componentDidMount() {
     apiGetUserProfile(this.props.store.get('selectedUser').user_id, (error, response) => {
       if (error) {
-        console.log(error);
-        // TODO: toast error
+        Toast.show({
+          text: 'Something went wrong, sorry!',
+          buttonText: 'Okay',
+          type: 'danger',
+          duration: 5000
+        });
         this.setState({ loading: false });
       } else {
         this.setState({ user: response.data, loading: false });

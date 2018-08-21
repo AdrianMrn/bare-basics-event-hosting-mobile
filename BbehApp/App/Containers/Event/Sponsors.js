@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  ActivityIndicator,
-  AsyncStorage,
-  StatusBar,
-  StyleSheet,
-  TouchableOpacity,
-  Image
-} from 'react-native';
-import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, List } from 'native-base';
+import { ActivityIndicator, View } from 'react-native';
+import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, List, Toast, Separator } from 'native-base';
+import _ from 'lodash';
 
 import Store from '../../Services/Store';
 import { apiGetEventExtraDetails } from '../../Services/Api';
@@ -21,6 +15,7 @@ class Sponsors extends React.Component {
     super();
     this.state = {
       loading: true,
+      groupedSponsors: {}
     }
   }
 
@@ -29,11 +24,16 @@ class Sponsors extends React.Component {
     const selectedEvent = store.get('selectedEvent');
     apiGetEventExtraDetails('sponsors', selectedEvent.id, (error, response) => {
       if (error) {
+        Toast.show({
+          text: 'Something went wrong, sorry!',
+          buttonText: 'Okay',
+          type: 'danger',
+          duration: 5000
+        });
         console.log(error);
-        // TODO: toast error
       } else {
-        store.set('selectedEventSponsors')(response.data);
-        console.log(response.data);
+        const groupedSponsors = _.groupBy(response.data, (sponsor) => sponsor.tier);
+        this.setState({ groupedSponsors });
       }
       this.setState({ loading: false });
     });
@@ -45,7 +45,7 @@ class Sponsors extends React.Component {
   }
 
   render() {
-    const selectedEventSponsors = this.props.store.get('selectedEventSponsors');
+    const groupedSponsors = this.state.groupedSponsors;
     return (
       <Container>
         <Header>
@@ -62,17 +62,50 @@ class Sponsors extends React.Component {
           <Right />
         </Header>
 
-        <Content padder>
-          <List>
-            {/* TODO: sort sponsors by tier (gold silver bronze -> <Separator />) */}
-            {this.state.loading && <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />}
-            {!this.state.loading && selectedEventSponsors.map(data => {
-              return (
-                <ListItemDetail data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
-              )
-            })}
-          </List>
-        </Content>
+        {this.state.loading &&
+          <Content padder>
+            <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />
+          </Content>
+        }
+
+        {!this.state.loading &&
+          <Content>
+            <List>
+              <View>
+                <Separator style={styles.separator} bordered>
+                  <Text style={styles.separatorText}>GOLD SPONSORS</Text>
+                </Separator>
+                {groupedSponsors.gold.map(data => {
+                  return (
+                    <ListItemDetail square={true} data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
+                  )
+                })}
+              </View>
+
+              <View>
+                <Separator style={styles.separator} bordered>
+                  <Text style={styles.separatorText}>SILVER SPONSORS</Text>
+                </Separator>
+                {groupedSponsors.silver.map(data => {
+                  return (
+                    <ListItemDetail square={true} data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
+                  )
+                })}
+              </View>
+
+              <View>
+                <Separator style={styles.separator} bordered>
+                  <Text style={styles.separatorText}>BRONZE SPONSORS</Text>
+                </Separator>
+                {groupedSponsors.bronze.map(data => {
+                  return (
+                    <ListItemDetail square={true} data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
+                  )
+                })}
+              </View>
+            </List>
+          </Content>
+        }
       </Container>
     );
   }

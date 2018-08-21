@@ -35,5 +35,9 @@ export default StyleSheet.create({
         ...Fonts.style.description,
         color: Colors.blueish
     },
+    separator: {
+        paddingTop: Metrics.doubleBaseMargin,
+        paddingBottom: Metrics.doubleBaseMargin
+    },
 
 })

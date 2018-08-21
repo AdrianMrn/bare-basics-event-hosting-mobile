@@ -10,7 +10,7 @@ export default class Session extends Component {
             <ListItem style={{ justifyContent: 'space-between', flexDirection: 'row' }} onPress={() => this.props.navigateToDetail(data)} thumbnail>
                 <View>
                     <Text style={{ alignSelf: 'flex-start' }} numberOfLines={1}>{data.name}</Text>
-                    {!!data.date_start && <Text style={{ alignSelf: 'flex-start' }} note>{`${moment(data.date_start).format('Do MMM, H:mm')} - ${moment(data.date_end).format('H:mm')}`}</Text>}
+                    {!!data.date_start && <Text style={{ alignSelf: 'flex-start' }} note>{`${moment(data.date_start).format('H:mm')} - ${moment(data.date_end).format('H:mm')}`}</Text>}
                 </View>
 
                 <View>

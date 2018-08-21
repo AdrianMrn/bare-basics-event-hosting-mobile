@@ -5,7 +5,7 @@ import {
     StatusBar,
     StyleSheet,
 } from 'react-native';
-import { Container, Header, Title, Left, Icon, Right, Thumbnail, Button, Body, Content, Text, Card, CardItem, List, ListItem, Separator } from "native-base";
+import { Container, Header, Title, Left, Icon, Right, Thumbnail, Button, Body, Content, Text, Card, CardItem, List, ListItem, Separator, Toast } from "native-base";
 
 import Store from '../Services/Store';
 import { apiFetchAttendingEvents } from '../Services/Api';
@@ -29,8 +29,12 @@ class EventOverview extends React.Component {
     fetchAttendingEvents = () => {
         apiFetchAttendingEvents((error, response) => {
             if (error) {
-                console.log(error);
-                // TODO: toast error
+                Toast.show({
+                    text: 'Something went wrong, sorry!',
+                    buttonText: 'Okay',
+                    type: 'danger',
+                    duration: 5000
+                });
             } else {
                 const store = this.props.store;
                 store.set('attendingUpcomingEvents')(response.data.upcomingEvents);

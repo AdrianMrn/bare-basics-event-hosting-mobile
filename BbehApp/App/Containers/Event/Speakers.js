@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, List } from 'native-base';
+import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, List, Toast } from 'native-base';
 
 import Store from '../../Services/Store';
 import { apiGetEventExtraDetails } from '../../Services/Api';
@@ -28,8 +28,12 @@ class Speakers extends React.Component {
     const selectedEvent = store.get('selectedEvent');
     apiGetEventExtraDetails('speakers', selectedEvent.id, (error, response) => {
       if (error) {
-        console.log(error);
-        // TODO: toast error
+        Toast.show({
+          text: 'Something went wrong, sorry!',
+          buttonText: 'Okay',
+          type: 'danger',
+          duration: 5000
+        });
       } else {
         store.set('selectedEventSpeakers')(response.data);
       }
@@ -60,7 +64,7 @@ class Speakers extends React.Component {
           <Right />
         </Header>
 
-        <Content padder>
+        <Content>
           <List>
             {this.state.loading && <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />}
             {!this.state.loading && selectedEventSpeakers.map(data => {

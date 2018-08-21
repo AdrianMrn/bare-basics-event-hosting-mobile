@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
-import { Container, Header, Content, Form, Item, Input, Button, Text } from 'native-base';
+import { Container, Header, Content, Form, Item, Input, Button, Text, Toast } from 'native-base';
 
 import Store from '../../Services/Store';
 import { apiLogin } from '../../Services/Api';
@@ -43,8 +43,12 @@ class SignInScreen extends React.Component {
       password: state.password
     }, (error, response) => {
       if (error) {
-        console.log(error);
-        // TODO: display error (toast?)
+        Toast.show({
+          text: 'Incorrect email or password',
+          buttonText: 'Okay',
+          type: 'danger',
+          duration: 5000
+        });
         this.setState({ loading: false });
       } else {
         this.props.navigation.navigate('App');
@@ -78,7 +82,7 @@ class SignInScreen extends React.Component {
                 disabled={state.loading}
               />
             </Item>
-            <Button onPress={this.onPressLogin} block disabled={state.loading ? true: false} success={state.loading ? false : true} style={styles.authButton}>
+            <Button onPress={this.onPressLogin} block disabled={state.loading ? true : false} success={state.loading ? false : true} style={styles.authButton}>
               <Text>Sign in</Text>
               {/* TODO: ActivityIndicator on loading */}
             </Button>

@@ -2,15 +2,18 @@ import '../Config'
 import DebugConfig from '../Config/DebugConfig'
 import React, { Component } from 'react'
 import RootContainer from './RootContainer'
+import { Root } from "native-base";
 
 import Store from '../Services/Store';
 
 class App extends Component {
   render() {
     return (
-      <Store.Container>
-        <RootContainer />
-      </Store.Container>
+      <Root>
+        <Store.Container>
+          <RootContainer />
+        </Store.Container>
+      </Root>
     )
   }
 }

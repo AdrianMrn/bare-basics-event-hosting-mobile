@@ -8,7 +8,7 @@ import {
   View,
   Linking
 } from 'react-native';
-import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, Thumbnail, List } from 'native-base';
+import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, Thumbnail, List, Toast } from 'native-base';
 import moment from 'moment';
 
 import Store from '../../Services/Store';
@@ -31,8 +31,12 @@ class SessionDetail extends React.Component {
   componentDidMount() {
     apiGetSessionSpeakers(this.props.store.get('selectedSession').id, (error, response) => {
       if (error) {
-        console.log(error);
-        // TODO: toast error
+        Toast.show({
+          text: 'Something went wrong, sorry!',
+          buttonText: 'Okay',
+          type: 'danger',
+          duration: 5000
+        });
         this.setState({ loading: false });
       } else {
         this.setState({ speakers: response.data, loading: false, });
@@ -45,6 +49,13 @@ class SessionDetail extends React.Component {
     this.props.navigation.navigate('UserProfile', { navBack: 'SessionDetail' });
   }
 
+  backToSchedule = () => {
+    this.props.navigation.navigate('Schedule', {
+      selectedDay: this.props.navigation.getParam('selectedDay', undefined),
+      selectedDayIndex: this.props.navigation.getParam('selectedDayIndex', undefined),
+    })
+  }
+
   render() {
     const session = this.props.store.get('selectedSession');
     return (
@@ -53,7 +64,7 @@ class SessionDetail extends React.Component {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.navigate('Schedule')}>
+              onPress={this.backToSchedule}>
               <Icon name="arrow-back" />
             </Button>
           </Left>

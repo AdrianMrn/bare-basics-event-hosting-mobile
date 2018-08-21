@@ -6,10 +6,10 @@ export default class ListItemDetail extends Component {
     render() {
         const data = this.props.data;
         return (
-            <ListItem style={{ paddingLeft: 0, marginLeft: 0 }} onPress={() => this.props.navigateToDetail(data)} avatar>
+            <ListItem style={{ paddingLeft: 0, marginLeft: 10 }} onPress={() => this.props.navigateToDetail(data)} avatar>
                 <Left>
                     {/* TODO: get this from media */}
-                    <Thumbnail source={{ uri: 'https://www.telegraph.co.uk/content/dam/news/2017/11/22/TELEMMGLPICT000147365976_trans_NvBQzQNjv4Bq3XmyF3YIL3K1caQxZsZv2Ssm-UOV8_Q90I8_c5Af0yY.jpeg?imwidth=450' }} />
+                    <Thumbnail square={this.props.square} source={{ uri: 'https://www.telegraph.co.uk/content/dam/news/2017/11/22/TELEMMGLPICT000147365976_trans_NvBQzQNjv4Bq3XmyF3YIL3K1caQxZsZv2Ssm-UOV8_Q90I8_c5Af0yY.jpeg?imwidth=450' }} />
                 </Left>
 
                 <Body>

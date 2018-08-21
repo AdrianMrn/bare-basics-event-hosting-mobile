@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, StatusBar } from "react-native";
-import { Container, Content, Text, List, ListItem } from "native-base";
+import { Container, Content, Text, List, ListItem, Icon, Left, Right } from "native-base";
 
 export default class SideBar extends React.Component {
     render() {
@@ -35,38 +35,35 @@ export default class SideBar extends React.Component {
                             <Text>Events Overview</Text>
                         </ListItem>
 
-                        {/* TODO: Render upcoming events from store */}
+                        {/* TODO: Render upcoming events from store in a ScrollView? */}
 
                         <ListItem // Profile
                             button
                             onPress={() => this.props.navigation.navigate('MyProfile')}
                         >
-                            <Text>My Profile</Text>
-                            {/* TODO: profile icon */}
+                            <Left>
+                                <Text>My Profile</Text>
+                            </Left>
+                            <Right>
+                                <Icon style={{ color: '#000' }} name="person" />
+                            </Right>
                         </ListItem>
 
                         <ListItem // Sign out
                             button
                             onPress={() => this.props.navigation.navigate('LogOut')}
                         >
-                            <Text>Sign Out</Text>
-                            {/* TODO: sign out icon */}
+                            <Left>
+                                <Text>Sign Out</Text>
+                            </Left>
+                            <Right>
+                                <Icon style={{ color: '#000' }} name="exit" />
+                            </Right>
                         </ListItem>
                     </List>
 
-                    {/* TODO: Create list manually so we can use icons & have "My Profile" and "Log Out" stickied at the bottom? (flex end or whatever) */}
-                    {/* <List
-                        dataArray={routes}
-                        renderRow={data => {
-                            return (
-                                <ListItem
-                                    button
-                                    onPress={() => this.props.navigation.navigate(data)}>
-                                    <Text>{data}</Text>
-                                </ListItem>
-                            );
-                        }}
-                    /> */}
+                    {/* TODO: "My Profile" and "Log Out" stickied at the bottom? (flex end or whatever) */}
+
                 </Content>
             </Container>
         );

@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
-import { Container, Header, Content, Form, Item, Input, Button, Text } from 'native-base';
+import { Container, Header, Content, Form, Item, Input, Button, Text, Toast } from 'native-base';
 
 import Store from '../../Services/Store';
 import { apiRegister } from '../../Services/Api';
@@ -48,7 +48,12 @@ class SignInScreen extends React.Component {
     }, (error, response) => {
       if (error) {
         console.log(error);
-        // TODO: display error (toast?)
+        Toast.show({
+          text: 'You missed a field',
+          buttonText: 'Okay',
+          type: 'danger',
+          duration: 5000
+        });
         this.setState({ loading: false });
       } else {
         this.props.navigation.navigate('App');

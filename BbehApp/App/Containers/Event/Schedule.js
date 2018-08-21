@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  ActivityIndicator,
-  AsyncStorage,
-  StatusBar,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView
-} from 'react-native';
-import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, List } from 'native-base';
+import { ActivityIndicator, ScrollView, Dimensions } from 'react-native';
+import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, List, Toast } from 'native-base';
 import moment from 'moment';
 import _ from 'lodash';
 
@@ -29,7 +22,8 @@ class Schedule extends React.Component {
       groupedSessions: {},
       firstDay: '',
       amountOfDays: 0,
-      selectedDay: 0
+      selectedDay: 0,
+      selectedDayIndex: 0
     }
   }
 
@@ -42,12 +36,17 @@ class Schedule extends React.Component {
     const selectedEvent = store.get('selectedEvent');
     apiGetEventExtraDetails('sessions', selectedEvent.id, (error, response) => {
       if (error) {
-        // TODO: toast error
         console.log(error);
+        Toast.show({
+          text: 'Something went wrong, sorry!',
+          buttonText: 'Okay',
+          type: 'danger',
+          duration: 5000
+        });
         this.setState({ loading: false });
       } else {
         // creating an object with all the days and sessions ie { day1: [{sess1}, {sess3}], day2: [{sess2}, {sess3}] }
-        let groupedSessions = _.groupBy(response.data, (session) => moment(session.date_start).startOf('day').format('x'));
+        const groupedSessions = _.groupBy(response.data, (session) => moment(session.date_start).startOf('day').format('x'));
         if (groupedSessions['Invalid date']) {
           delete groupedSessions['Invalid date'];
         }
@@ -62,20 +61,36 @@ class Schedule extends React.Component {
           groupedSessions,
           firstDay,
           amountOfDays,
-          selectedDay: firstDay,
           loading: false
-        })
+        });
+
+        /* if we navigated here from a SessionDetail page, set selectedDay to the session's day and scroll to it,
+          otherwise we're setting selectedDay to the first day of the event and not scrolling. */
+        const selectedDay = this.props.navigation.getParam('selectedDay', undefined);
+        if (selectedDay) {
+          const dayIndex = this.props.navigation.getParam('selectedDayIndex', undefined)
+          this.setState({ selectedDay });
+          this.props.navigation.setParams({ selectedDay: undefined, selectedDayIndex: undefined });
+
+          const { width } = Dimensions.get('window')
+          setTimeout(() => {
+            this._dayScrollView.scrollTo({ x: (dayIndex * 71.5) - (width / 2) + (71.5 / 2) });
+          }, 250); /* TODO: Find a way to scroll when the dayScrollView has rendered instead of using an unreliable timeout */
+        } else {
+          this.setState({ selectedDay: firstDay });
+        }
+
       }
     });
   }
 
   navigateToDetail = data => {
     this.props.store.set('selectedSession')(data);
-    this.props.navigation.navigate('SessionDetail');
+    this.props.navigation.navigate('SessionDetail', { selectedDay: this.state.selectedDay, selectedDayIndex: this.state.selectedDayIndex });
   }
 
-  setActiveDay = day => {
-    this.setState({ selectedDay: day.format('x') });
+  setActiveDay = (day, dayIndex) => {
+    this.setState({ selectedDay: moment(day).format('x'), selectedDayIndex: dayIndex });
   }
 
   render() {
@@ -103,14 +118,15 @@ class Schedule extends React.Component {
         }
 
         {!loading &&
-          <Content padder>
+          <Content>
 
-            <ScrollView style={{ height: 64, width: '100%' }} horizontal>
+            <ScrollView ref={view => this._dayScrollView = view} style={{ marginTop: 10, height: 64, width: '100%' }} horizontal>
               {_.times(amountOfDays, (dayIndex) => {
                 day = moment(firstDay).add(dayIndex, 'd');
                 return (<DayButton
                   key={dayIndex}
                   day={day}
+                  dayIndex={dayIndex}
                   active={(selectedDay == day.format('x')) ? true : false}
                   setActiveDay={this.setActiveDay}
                 />)
@@ -120,18 +136,10 @@ class Schedule extends React.Component {
             <Divider />
 
             <List style={{ marginTop: 5 }}>
-
-              {/* TODO: map through this day's events */}
-
-
-              { /* selectedEventSessions.map(data => {
-                return (
-                  <Session data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
-                )
-              }) */ }
-
+              {(groupedSessions[selectedDay]) && groupedSessions[selectedDay].map(data =>
+                <Session data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
+              )}
             </List>
-            {/* TODO: display sessions by day & sort by time */}
           </Content>
         }
       </Container>
