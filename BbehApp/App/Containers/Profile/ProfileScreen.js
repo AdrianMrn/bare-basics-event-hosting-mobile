@@ -2,11 +2,8 @@ import React from 'react';
 import {
   ActivityIndicator,
   AsyncStorage,
-  StatusBar,
-  StyleSheet,
-  TouchableOpacity
 } from 'react-native';
-import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text } from 'native-base';
+import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Label, Text, Toast } from 'native-base';
 
 import Store from '../../Services/Store';
 import { } from '../../Services/Api';
@@ -19,11 +16,23 @@ class ProfileScreen extends React.Component {
     this.state = {
       first_name: '',
       last_name: '',
+      company: '',
+      position: '',
       description: '',
-      // other infos, social links, IMAGE, ...
+      linkedin: '',
+      facebook: '',
+      website: '',
+      twitter: '',
+      // TODO: probably need another for the user avatar?
 
-      loading: false,
+      loading: true,
     }
+  }
+
+  componentDidMount = () => {
+    // TODO: get user info from API, fill state with user details, toast error etc etc
+
+    this.setState({ loading: false });
   }
 
   onInputChange = (field, text) => {
@@ -32,27 +41,66 @@ class ProfileScreen extends React.Component {
     })
   }
 
+  saveProfile = () => {
+    this.setState({ loading: true });
+    // TODO: send profile to API, display toast on error etc etc
+
+
+    this.setState({ loading: false });
+    Toast.show({
+      text: 'Profile has been saved',
+      buttonText: 'Okay',
+      type: 'success',
+      duration: 5000
+    });
+  }
+
   render() {
     const state = this.state;
+    const { loading } = state;
     return (
       <Container style={styles.authScreen}>
         <Header>
           <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.openDrawer()}>
+            <Button transparent onPress={() => this.props.navigation.openDrawer()}>
               <Icon name="menu" />
             </Button>
           </Left>
           <Body>
             <Title>My Profile</Title>
           </Body>
-          <Right />
+          <Right>
+            <Button onPress={this.saveProfile} disabled={loading ? true : false}>
+              <Icon name="checkmark" />
+            </Button>
+          </Right>
         </Header>
 
-        <Content padder>
-          <Text>Profile</Text>
-        </Content>
+        {loading &&
+          <Content padder>
+            <ActivityIndicator size="large" />
+          </Content>
+        }
+
+        {!loading &&
+          <Content padder>
+            <Form style={styles.form}>
+
+              <Item stackedLabel>
+                <Label>First name</Label>
+                <Input
+                  onChangeText={text => { this.onInputChange('first_name', text) }}
+                  value={state.first_name}
+                  disabled={loading}
+                />
+              </Item>
+
+              {/* TODO: add other inputs */}
+
+
+            </Form>
+          </Content>
+        }
       </Container>
     );
   }

@@ -47,7 +47,6 @@ class SignInScreen extends React.Component {
       first_name: state.first_name
     }, (error, response) => {
       if (error) {
-        console.log(error);
         Toast.show({
           text: 'You missed a field',
           buttonText: 'Okay',

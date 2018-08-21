@@ -6,6 +6,13 @@ export default createConnectedStore({
         password: '',
         first_name: '',
         last_name: '',
+        company: '',
+        position: '',
+        description: '',
+        linkedin: '',
+        facebook: '',
+        website: '',
+        twitter: '',
     },
 
     attendingUpcomingEvents: [],
@@ -27,9 +34,9 @@ export default createConnectedStore({
         is_published: false,
     },
 
-    selectedUser: {},
-    selectedSponsor: {},
-    selectedSession: {},
+    selectedUser:  {},
+    selectedSponsor:  {},
+    selectedSession:  {},
 
     selectedEventSessions: [],
     selectedEventSpeakers: [],

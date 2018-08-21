@@ -63,7 +63,8 @@ class GeneralInfo extends React.Component {
 
           {event.address &&
             <Button style={{ marginVertical: 15 }} transparent iconLeft>
-              {/* TODO: (in web & backend, get coordinates or goo.gl url and link to this) */}
+              {/* TODO: (in web & backend, get coordinates and link to google maps page of this),
+                if (!coords_lat) --> do not show Button, just display address in <Text> (if it exists) */}
               <Icon style={{ marginLeft: 0 }} name='pin' />
               <Text>{`${event.address}, ${event.city}, ${event.country}`}</Text>
             </Button>}
@@ -75,6 +76,9 @@ class GeneralInfo extends React.Component {
           >
             <Text style={styles.eventDescription}>{event.description}</Text>
           </ViewMoreText>
+
+          {/* TODO: if the user is not attending this event yet, don't display the navCards but 
+            display an "Attend Event" block Button at the bottom of the page */}
 
           <View style={styles.navCardContainer}>
             <NavCard iconName={'chatbubbles'} navigate={() => { this.props.navigation.navigate('Speakers') }} title={'SPEAKERS'} />

@@ -86,7 +86,7 @@ class ProfileScreen extends React.Component {
 
               <View style={styles.nameAndDesc}>
                 <Text style={styles.userName}>{user.first_name} {user.last_name}</Text>
-                <Text note style={styles.userPosition}>{user.position} {!!user.company ? 'at' : ''} {user.company}</Text>
+                <Text note style={styles.userPosition}>{user.position} {!!user.company || !!user.position ? 'at' : ''} {user.company}</Text>
               </View>
             </View>
 
