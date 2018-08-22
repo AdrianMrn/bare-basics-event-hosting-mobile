@@ -73,10 +73,13 @@ class Schedule extends React.Component {
           this.props.navigation.setParams({ selectedDay: undefined, selectedDayIndex: undefined });
 
           const { width } = Dimensions.get('window')
+          /* TODO: Find a way to scroll when the dayScrollView has rendered
+            instead of using an unreliable timeout. If the user switches screen before the timeout has
+            finished, the method will fire on another screen and throw an error */
           setTimeout(() => {
             const buttonWidth = 62.8; // Hardcoded
             this._dayScrollView.scrollTo({ x: (selectedDayIndex * buttonWidth) - (width / 2) + (buttonWidth / 2) });
-          }, 250); /* TODO: Find a way to scroll when the dayScrollView has rendered instead of using an unreliable timeout */
+          }, 100);
         } else {
           this.setState({ selectedDay: firstDay });
         }

@@ -70,7 +70,7 @@ class ProfileScreen extends React.Component {
             <Title>My Profile</Title>
           </Body>
           <Right>
-            <Button onPress={this.saveProfile} disabled={loading ? true : false}>
+            <Button transparent onPress={this.saveProfile} disabled={loading ? true : false}>
               <Icon name="checkmark" />
             </Button>
           </Right>
