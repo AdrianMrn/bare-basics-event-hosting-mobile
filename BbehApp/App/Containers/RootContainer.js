@@ -10,6 +10,7 @@ import SignInScreen from './Auth/SignInScreen';
 import LogOutScreen from './Auth/LogOutScreen';
 import RegisterScreen from './Auth/RegisterScreen';
 import EventOverview from './EventOverview';
+import ExploreEvents from './Explore/ExploreEvents';
 import ProfileScreen from './Profile/ProfileScreen';
 // event components
 import GeneralInfo from './Event/GeneralInfo';
@@ -30,7 +31,8 @@ export default class RootContainer extends Component {
   });
 
   AppStack = createDrawerNavigator({
-    EventOverview: EventOverview,
+    EventOverview,
+    ExploreEvents,
 
     GeneralInfo,
     Attendees,

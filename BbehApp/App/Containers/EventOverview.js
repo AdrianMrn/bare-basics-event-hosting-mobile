@@ -46,9 +46,7 @@ class EventOverview extends React.Component {
     }
 
     navigateToExploreEvents = () => {
-        console.log("exploring");
-        // TODO: navigate to explore events page
-
+        this.props.navigation.navigate('ExploreEvents');
     }
 
     render() {

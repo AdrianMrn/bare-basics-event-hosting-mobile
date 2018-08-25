@@ -62,14 +62,17 @@ class GeneralInfo extends React.Component {
 
           <Divider marginTop={10} />
 
-          {(!!event.coords_lon && !!event.coords_lat) &&
+          {(!!event.coords_lon && !!event.coords_lat && event.coords_lon != 0.0000000) &&
             <Button onPress={() => Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${event.coords_lat},${event.coords_lon}`)} style={{ marginVertical: 15 }} transparent iconLeft>
               <Icon style={{ marginLeft: 0 }} name='pin' />
               <Text>{event.address}</Text>
             </Button>
           }
-          {(!event.coords_lon && !!event.address) &&
-            <Text style={{ marginVertical: 15 }}>{event.address}</Text>
+          {((!event.coords_lon || (event.coords_lon == 0.0000000)) && !!event.address) &&
+            <View style={{marginVertical: 15, flexDirection: 'row' }}>
+              <Icon style={{ marginLeft: 0, marginRight: 10 }} name='pin' />
+              <Text>{event.address}</Text>
+            </View>
           }
 
           <ViewMoreText
