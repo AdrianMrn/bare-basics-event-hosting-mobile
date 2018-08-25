@@ -5,6 +5,7 @@ import _ from 'lodash';
 
 import Store from '../../Services/Store';
 import { apiGetEventExtraDetails } from '../../Services/Api';
+import showToast from '../../Services/ShowToast';
 
 import ListItemDetail from '../../Components/ListItemDetail';
 
@@ -24,12 +25,7 @@ class Sponsors extends React.Component {
     const selectedEvent = store.get('selectedEvent');
     apiGetEventExtraDetails('sponsors', selectedEvent.id, (error, response) => {
       if (error) {
-        Toast.show({
-          text: 'Something went wrong, sorry!',
-          buttonText: 'Okay',
-          type: 'danger',
-          duration: 5000
-        });
+        showToast(error);
         console.log(error);
       } else {
         const groupedSponsors = _.groupBy(response.data, (sponsor) => sponsor.tier);

@@ -13,6 +13,7 @@ import moment from 'moment';
 
 import Store from '../../Services/Store';
 import { apiGetSessionSpeakers } from '../../Services/Api';
+import showToast from '../../Services/ShowToast';
 
 import Divider from '../../Components/Divider';
 import ListItemDetail from '../../Components/ListItemDetail';
@@ -31,12 +32,7 @@ class SessionDetail extends React.Component {
   componentDidMount() {
     apiGetSessionSpeakers(this.props.store.get('selectedSession').id, (error, response) => {
       if (error) {
-        Toast.show({
-          text: 'Something went wrong, sorry!',
-          buttonText: 'Okay',
-          type: 'danger',
-          duration: 5000
-        });
+        showToast(error);
         this.setState({ loading: false });
       } else {
         this.setState({ speakers: response.data, loading: false, });

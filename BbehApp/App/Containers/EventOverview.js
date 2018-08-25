@@ -9,6 +9,7 @@ import { Container, Header, Title, Left, Icon, Right, Thumbnail, Button, Body, C
 
 import Store from '../Services/Store';
 import { apiFetchAttendingEvents } from '../Services/Api';
+import showToast from '../Services/ShowToast';
 
 import Event from '../Components/Event';
 
@@ -29,12 +30,7 @@ class EventOverview extends React.Component {
     fetchAttendingEvents = () => {
         apiFetchAttendingEvents((error, response) => {
             if (error) {
-                Toast.show({
-                    text: 'Something went wrong, sorry!',
-                    buttonText: 'Okay',
-                    type: 'danger',
-                    duration: 5000
-                });
+                showToast(error);
             } else {
                 const store = this.props.store;
                 store.set('attendingUpcomingEvents')(response.data.upcomingEvents);

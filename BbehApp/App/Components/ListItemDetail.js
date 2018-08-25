@@ -8,8 +8,8 @@ export default class ListItemDetail extends Component {
         return (
             <ListItem style={{ paddingLeft: 0, marginLeft: 10 }} onPress={() => this.props.navigateToDetail(data)} avatar>
                 <Left>
-                    {/* TODO: get this from media */}
-                    <Thumbnail square={this.props.square} source={{ uri: 'https://www.telegraph.co.uk/content/dam/news/2017/11/22/TELEMMGLPICT000147365976_trans_NvBQzQNjv4Bq3XmyF3YIL3K1caQxZsZv2Ssm-UOV8_Q90I8_c5Af0yY.jpeg?imwidth=450' }} />
+                    {/* TODO: make sure image works on prod */}
+                    <Thumbnail square={this.props.square} source={{ uri: data.imageUrl }} />
                 </Left>
 
                 <Body>

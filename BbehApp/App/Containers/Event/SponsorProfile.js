@@ -38,7 +38,7 @@ class ProfileScreen extends React.Component {
 
           <View style={styles.mainInfo}>
             {/* TODO: get media */}
-            <Thumbnail large source={{ uri: 'https://www.telegraph.co.uk/content/dam/news/2017/11/22/TELEMMGLPICT000147365976_trans_NvBQzQNjv4Bq3XmyF3YIL3K1caQxZsZv2Ssm-UOV8_Q90I8_c5Af0yY.jpeg?imwidth=450' }} />
+            <Thumbnail large source={{ uri: data.imageUrl }} />
 
             <View style={styles.nameAndDesc}>
               <Text style={styles.userName}>{sponsor.name}</Text>

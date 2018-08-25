@@ -11,6 +11,7 @@ import { Container, Header, Content, Form, Item, Input, Button, Text, Toast } fr
 
 import Store from '../../Services/Store';
 import { apiLogin } from '../../Services/Api';
+import showToast from '../../Services/ShowToast';
 
 import styles from './Styles/AuthStyles'
 
@@ -36,19 +37,13 @@ class SignInScreen extends React.Component {
 
   onPressLogin = () => {
     this.setState({ loading: true });
-    // TODO: form validation (especially email) with toast errors
     const state = this.state;
     apiLogin({
       email: state.email,
       password: state.password
     }, (error, response) => {
       if (error) {
-        Toast.show({
-          text: 'Incorrect email or password',
-          buttonText: 'Okay',
-          type: 'danger',
-          duration: 5000
-        });
+        showToast(error);
         this.setState({ loading: false });
       } else {
         this.props.navigation.navigate('App');

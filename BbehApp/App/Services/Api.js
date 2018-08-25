@@ -5,7 +5,8 @@ import { AsyncStorage } from "react-native"
 
 /* const apiUrl = Config.API_URL; */
 
-const apiUrl = 'http://10.0.3.2:8000/api'; // TODO: set in .env
+/* const apiUrl = 'http://3.120.104.63/api'; // TODO: set in .env */
+const apiUrl = 'http://10.0.3.2:8000/api';
 
 async function setAccessToken() {
   const accessToken = await AsyncStorage.getItem('accessToken');

@@ -37,6 +37,8 @@ export default class SideBar extends React.Component {
 
                         {/* TODO: Render upcoming events from store in a ScrollView? */}
 
+                        {/* TODO: "Host an event" CTA link to website */}
+
                         <ListItem // Profile
                             button
                             onPress={() => this.props.navigation.navigate('MyProfile')}

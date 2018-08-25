@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 import Store from '../../Services/Store';
 import { apiGetEventExtraDetails } from '../../Services/Api';
+import showToast from '../../Services/ShowToast';
 
 import Session from '../../Components/Session';
 import Divider from '../../Components/Divider';
@@ -36,13 +37,7 @@ class Schedule extends React.Component {
     const selectedEvent = store.get('selectedEvent');
     apiGetEventExtraDetails('sessions', selectedEvent.id, (error, response) => {
       if (error) {
-        console.log(error);
-        Toast.show({
-          text: 'Something went wrong, sorry!',
-          buttonText: 'Okay',
-          type: 'danger',
-          duration: 5000
-        });
+        showToast(error);
         this.setState({ loading: false });
       } else {
         // creating an object with all the days and sessions ie { day1: [{sess1}, {sess3}], day2: [{sess2}, {sess3}] }
@@ -77,8 +72,10 @@ class Schedule extends React.Component {
             instead of using an unreliable timeout. If the user switches screen before the timeout has
             finished, the method will fire on another screen and throw an error */
           setTimeout(() => {
-            const buttonWidth = 62.8; // Hardcoded
-            this._dayScrollView.scrollTo({ x: (selectedDayIndex * buttonWidth) - (width / 2) + (buttonWidth / 2) });
+            if (this._dayScrollView) {
+              const buttonWidth = 62.8; // Hardcoded
+              this._dayScrollView.scrollTo({ x: (selectedDayIndex * buttonWidth) - (width / 2) + (buttonWidth / 2) });
+            }
           }, 100);
         } else {
           this.setState({ selectedDay: firstDay });

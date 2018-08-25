@@ -12,6 +12,7 @@ import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item,
 
 import Store from '../../Services/Store';
 import { apiGetUserProfile } from '../../Services/Api';
+import showToast from '../../Services/ShowToast';
 
 import Divider from '../../Components/Divider';
 
@@ -41,12 +42,7 @@ class ProfileScreen extends React.Component {
   componentDidMount() {
     apiGetUserProfile(this.props.store.get('selectedUser').user_id, (error, response) => {
       if (error) {
-        Toast.show({
-          text: 'Something went wrong, sorry!',
-          buttonText: 'Okay',
-          type: 'danger',
-          duration: 5000
-        });
+        showToast(error);
         this.setState({ loading: false });
       } else {
         this.setState({ user: response.data, loading: false });
@@ -82,11 +78,11 @@ class ProfileScreen extends React.Component {
 
             <View style={styles.mainInfo}>
               {/* TODO: get media */}
-              <Thumbnail large source={{ uri: 'https://www.telegraph.co.uk/content/dam/news/2017/11/22/TELEMMGLPICT000147365976_trans_NvBQzQNjv4Bq3XmyF3YIL3K1caQxZsZv2Ssm-UOV8_Q90I8_c5Af0yY.jpeg?imwidth=450' }} />
+              <Thumbnail large source={{ uri: user.imageUrl }} />
 
               <View style={styles.nameAndDesc}>
                 <Text style={styles.userName}>{user.first_name} {user.last_name}</Text>
-                <Text note style={styles.userPosition}>{user.position} {!!user.company || !!user.position ? 'at' : ''} {user.company}</Text>
+                <Text note style={styles.userPosition}>{user.position} {(!!user.company && !!user.position) ? 'at' : ''} {user.company}</Text>
               </View>
             </View>
 
@@ -121,7 +117,7 @@ class ProfileScreen extends React.Component {
               {user.description}
             </Text>
 
-            {/* TODO: if this user has talks at this event, display them */}
+            {/* TODO: if this user has talks at this event, display them here */}
 
           </Content>
         }

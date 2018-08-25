@@ -5,7 +5,8 @@ import {
   StatusBar,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
+  Linking
 } from 'react-native';
 import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, Thumbnail } from 'native-base';
 import moment from 'moment';
@@ -44,15 +45,15 @@ class GeneralInfo extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title>Event</Title>
+            <Title>Event Detail</Title>
           </Body>
           <Right />
         </Header>
 
         <Content padder style={styles.content}>
           <View style={styles.mainInfo}>
-            {/* TODO: get media */}
-            <Thumbnail square large source={{ uri: 'https://www.telegraph.co.uk/content/dam/news/2017/11/22/TELEMMGLPICT000147365976_trans_NvBQzQNjv4Bq3XmyF3YIL3K1caQxZsZv2Ssm-UOV8_Q90I8_c5Af0yY.jpeg?imwidth=450' }} />
+            {/* TODO: make sure image works on prod */}
+            <Thumbnail square large source={{ uri: event.imageUrl }} />
             <Text style={styles.eventName}>{event.name}</Text>
           </View>
 
@@ -61,13 +62,15 @@ class GeneralInfo extends React.Component {
 
           <Divider marginTop={10} />
 
-          {event.address &&
-            <Button style={{ marginVertical: 15 }} transparent iconLeft>
-              {/* TODO: (in web & backend, get coordinates and link to google maps page of this),
-                if (!coords_lat) --> do not show Button, just display address in <Text> (if it exists) */}
+          {(!!event.coords_lon && !!event.coords_lat) &&
+            <Button onPress={() => Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${event.coords_lat},${event.coords_lon}`)} style={{ marginVertical: 15 }} transparent iconLeft>
               <Icon style={{ marginLeft: 0 }} name='pin' />
-              <Text>{`${event.address}, ${event.city}, ${event.country}`}</Text>
-            </Button>}
+              <Text>{event.address}</Text>
+            </Button>
+          }
+          {(!event.coords_lon && !!event.address) &&
+            <Text style={{ marginVertical: 15 }}>{event.address}</Text>
+          }
 
           <ViewMoreText
             numberOfLines={3}

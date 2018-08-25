@@ -10,6 +10,7 @@ import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item,
 
 import Store from '../../Services/Store';
 import { apiGetEventExtraDetails } from '../../Services/Api';
+import showToast from '../../Services/ShowToast';
 
 import ListItemDetail from '../../Components/ListItemDetail';
 
@@ -28,12 +29,7 @@ class Attendees extends React.Component {
     const selectedEvent = store.get('selectedEvent');
     apiGetEventExtraDetails('attendees', selectedEvent.id, (error, response) => {
       if (error) {
-        Toast.show({
-          text: 'Something went wrong, sorry!',
-          buttonText: 'Okay',
-          type: 'danger',
-          duration: 5000
-        });
+        showToast(error);
       } else {
         store.set('selectedEventAttendees')(response.data);
       }

@@ -7,6 +7,7 @@ import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item,
 
 import Store from '../../Services/Store';
 import { } from '../../Services/Api';
+import showToast from '../../Services/ShowToast';
 
 import styles from './Styles/ProfileStyles';
 
@@ -23,7 +24,7 @@ class ProfileScreen extends React.Component {
       facebook: '',
       website: '',
       twitter: '',
-      // TODO: probably need another for the user avatar?
+      imageUrl: '',
 
       loading: true,
     }
@@ -47,12 +48,7 @@ class ProfileScreen extends React.Component {
 
 
     this.setState({ loading: false });
-    Toast.show({
-      text: 'Profile has been saved',
-      buttonText: 'Okay',
-      type: 'success',
-      duration: 5000
-    });
+    showToast(error);
   }
 
   render() {

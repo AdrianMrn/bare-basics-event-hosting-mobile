@@ -11,6 +11,7 @@ import { Container, Header, Content, Form, Item, Input, Button, Text, Toast } fr
 
 import Store from '../../Services/Store';
 import { apiRegister } from '../../Services/Api';
+import showToast from '../../Services/ShowToast';
 
 import styles from './Styles/AuthStyles'
 
@@ -38,7 +39,6 @@ class SignInScreen extends React.Component {
 
   onPressRegister = () => {
     this.setState({ loading: true });
-    // TODO: form validation (especially email)
     const state = this.state;
     apiRegister({
       email: state.email,
@@ -47,12 +47,7 @@ class SignInScreen extends React.Component {
       first_name: state.first_name
     }, (error, response) => {
       if (error) {
-        Toast.show({
-          text: 'You missed a field',
-          buttonText: 'Okay',
-          type: 'danger',
-          duration: 5000
-        });
+        showToast(error);
         this.setState({ loading: false });
       } else {
         this.props.navigation.navigate('App');
