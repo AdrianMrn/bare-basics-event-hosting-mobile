@@ -9,5 +9,10 @@ export default StyleSheet.create({
   separatorText: {
     fontSize: 13
   },
+  searchBox: {
+    backgroundColor: Colors.snow,
+    width: Metrics.screenWidth - (Metrics.screenWidth / 3),
+    borderRadius: 5
+  }
 
 })

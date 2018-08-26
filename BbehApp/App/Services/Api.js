@@ -62,6 +62,18 @@ export async function apiFetchAttendingEvents(next) {
     });
 }
 
+export async function apiQueryEvents(searchQuery, next) {
+  const accessToken = await setAccessToken();
+
+  axios.get(`${apiUrl}/query-events/${searchQuery}`)
+    .then(response => {
+      next(false, response);
+    })
+    .catch(error => {
+      next(error);
+    });
+}
+
 export async function apiGetEventExtraDetails(type, eventId, next) {
   const accessToken = await setAccessToken();
 
