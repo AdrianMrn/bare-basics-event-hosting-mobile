@@ -10,9 +10,13 @@ export default StyleSheet.create({
     fontSize: 13
   },
   searchBox: {
-    backgroundColor: Colors.snow,
-    width: Metrics.screenWidth - (Metrics.screenWidth / 3),
-    borderRadius: 5
+    width: Metrics.screenWidth - (Metrics.screenWidth / 4),
+  },
+  disclaimerText: {
+    ...Fonts.style.description,
+    marginTop: Metrics.baseMargin,
+    flex: 1,
+    alignSelf: 'center',
   }
 
 })

@@ -5,7 +5,6 @@ import moment from 'moment';
 export default class Event extends Component {
     render() {
         const data = this.props.data;
-        console.log(data);
         return (
             <ListItem onPress={() => this.props.navigateToEvent(data)} thumbnail>
                 {/* TODO: turn these into cards for aesthetic? */}

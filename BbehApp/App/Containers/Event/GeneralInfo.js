@@ -13,7 +13,7 @@ import moment from 'moment';
 import ViewMoreText from 'react-native-view-more-text';
 
 import Store from '../../Services/Store';
-import { } from '../../Services/Api';
+import { apiCheckIfAttending, apiAttendEvent, apiUnattendEvent } from '../../Services/Api';
 
 import NavCard from '../../Components/NavCard';
 import Divider from '../../Components/Divider';
@@ -21,6 +21,56 @@ import Divider from '../../Components/Divider';
 import styles from './Styles/EventStyles';
 
 class GeneralInfo extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      loading: true,
+      attending: false,
+      attendeeId: 0,
+    }
+  }
+
+  componentDidMount = () => {
+    this.setState({ loading: true });
+    const event = this.props.store.get('selectedEvent');
+    apiCheckIfAttending(event.id, (error, response) => {
+      if (error) {
+        showToast(error);
+      } else {
+        console.log(response);
+        if (response.data.attending) {
+          console.log(response.data);
+          this.setState({ loading: false, attending: true, attendeeId: response.data.attendeeId });
+        } else {
+          this.setState({ loading: false, attending: false });
+        }
+      }
+    });
+  }
+
+  attendEvent = () => {
+    this.setState({ loading: true });
+    const event = this.props.store.get('selectedEvent');
+    apiAttendEvent(event.id, (error, response) => {
+      if (error) {
+        showToast(error);
+      } else {
+        this.setState({ loading: false, attending: true, attendeeId: response.data.attendeeId });
+      }
+    });
+  }
+
+  unattendEvent = () => {
+    this.setState({ loading: true });
+    apiUnattendEvent(this.state.attendeeId, (error, response) => {
+      if (error) {
+        showToast(error);
+      } else {
+        this.setState({ loading: false, attending: false });
+      }
+    });
+  }
+
   renderViewMore(onPress) {
     return (
       <Text style={styles.renderViewText} onPress={onPress}>Show more</Text>
@@ -34,6 +84,7 @@ class GeneralInfo extends React.Component {
 
   render() {
     const event = this.props.store.get('selectedEvent');
+    const { loading, attending } = this.state;
     return (
       <Container>
         <Header>
@@ -65,11 +116,11 @@ class GeneralInfo extends React.Component {
           {(!!event.coords_lon && !!event.coords_lat && event.coords_lon != 0.0000000) &&
             <Button onPress={() => Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${event.coords_lat},${event.coords_lon}`)} style={{ marginVertical: 15 }} transparent iconLeft>
               <Icon style={{ marginLeft: 0 }} name='pin' />
-              <Text>{event.address}</Text>
+              <Text style={styles.address}>{event.address}</Text>
             </Button>
           }
           {((!event.coords_lon || (event.coords_lon == 0.0000000)) && !!event.address) &&
-            <View style={{marginVertical: 15, flexDirection: 'row' }}>
+            <View style={{ marginVertical: 15, flexDirection: 'row' }}>
               <Icon style={{ marginLeft: 0, marginRight: 10 }} name='pin' />
               <Text>{event.address}</Text>
             </View>
@@ -83,15 +134,30 @@ class GeneralInfo extends React.Component {
             <Text style={styles.eventDescription}>{event.description}</Text>
           </ViewMoreText>
 
-          {/* TODO: if the user is not attending this event yet, don't display the navCards but 
-            display an "Attend Event" block Button at the bottom of the page */}
+          {this.state.attending &&
+            <View>
+              <View style={styles.navCardContainer}>
+                <NavCard iconName={'chatbubbles'} navigate={() => { this.props.navigation.navigate('Speakers') }} title={'SPEAKERS'} />
+                <NavCard iconName={'calendar'} navigate={() => { this.props.navigation.navigate('Schedule') }} title={'SCHEDULE'} />
+                <NavCard iconName={'people'} navigate={() => { this.props.navigation.navigate('Attendees') }} title={'ATTENDEES'} />
+                <NavCard iconName={'medal'} navigate={() => { this.props.navigation.navigate('Sponsors') }} title={'SPONSORS'} />
+              </View>
 
-          <View style={styles.navCardContainer}>
-            <NavCard iconName={'chatbubbles'} navigate={() => { this.props.navigation.navigate('Speakers') }} title={'SPEAKERS'} />
-            <NavCard iconName={'calendar'} navigate={() => { this.props.navigation.navigate('Schedule') }} title={'SCHEDULE'} />
-            <NavCard iconName={'people'} navigate={() => { this.props.navigation.navigate('Attendees') }} title={'ATTENDEES'} />
-            <NavCard iconName={'medal'} navigate={() => { this.props.navigation.navigate('Sponsors') }} title={'SPONSORS'} />
-          </View>
+              <Button style={{ marginTop: 10 }} onPress={this.unattendEvent} block disabled={this.state.loading ? true : false} danger={this.state.loading ? false : true}>
+                {!!this.state.loading && <ActivityIndicator size="small" color="#fff" />}
+                {!this.state.loading && <Icon name="close" />}
+                <Text>Unattend</Text>
+              </Button>
+            </View>
+          }
+
+          {!this.state.attending &&
+            <Button onPress={this.attendEvent} block disabled={this.state.loading ? true : false} primary={this.state.loading ? false : true}>
+              {!!this.state.loading && <ActivityIndicator size="small" color="#fff" />}
+              {!this.state.loading && <Icon name="add" />}
+              <Text>Join</Text>
+            </Button>
+          }
 
 
         </Content>

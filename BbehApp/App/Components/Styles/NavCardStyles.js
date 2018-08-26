@@ -3,9 +3,9 @@ import { Fonts, Metrics, Colors } from '../../Themes';
 
 export default StyleSheet.create({
     navCard: {
-        width: (Metrics.screenWidth / 2) - (Metrics.doubleBaseMargin * 2),
-        height: (Metrics.screenWidth / 2) - (Metrics.doubleBaseMargin * 2),
-        marginBottom: Metrics.doubleBaseMargin
+        width: (Metrics.screenWidth / 2) - (Metrics.doubleBaseMargin),
+        height: (Metrics.screenWidth / 2) - (Metrics.doubleBaseMargin),
+
     },
     cardItem: {
         flex: 1, backgroundColor: Colors.blueish

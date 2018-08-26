@@ -19,28 +19,36 @@ class ExploreEvents extends React.Component {
     this.state = {
       loading: false,
       queryResult: [],
-      searchQuery: ''
+      searchQuery: '',
+      showDisclaimer: false,
+      searchTouched: false
     }
   }
 
   fetchEvents = debounce(() => {
-    if (this.state.searchQuery) {
-      this.setState({ loading: true });
+    if (this.state.searchQuery && this.state.searchQuery.length >= 3) {
+      this.setState({ loading: true, showDisclaimer: false });
       apiQueryEvents(this.state.searchQuery, (error, response) => {
         if (error) {
           showToast(error);
         } else {
           this.setState({ queryResult: response.data });
         }
-        this.setState({ loading: false });
+        this.setState({ loading: false, showDisclaimer: false });
       });
+    } else {
+      this.setState({ showDisclaimer: true });
     }
-  }, 300);
+  }, 500);
 
   onInputChange = (field, text) => {
     this.setState({
       [field]: text
     });
+
+    if (this.state.searchQuery.length < 3) {
+      this.setState({ showDisclaimer: true, searchTouched: true, queryResult: [] });
+    }
 
     this.fetchEvents();
   }
@@ -51,7 +59,7 @@ class ExploreEvents extends React.Component {
   }
 
   render() {
-    const { queryResult, searchQuery } = this.state;
+    const { queryResult, searchQuery, showDisclaimer, searchTouched } = this.state;
 
     return (
       <Container>
@@ -65,49 +73,32 @@ class ExploreEvents extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Item regular style={styles.searchBox}>
+            <Item style={styles.searchBox}>
               <Input
+                style={{ color: 'white' }}
+                placeholderTextColor='#FFF'
                 placeholder="Search"
                 onChangeText={text => { this.onInputChange('searchQuery', text) }}
                 value={searchQuery}
+                autoFocus={true}
               />
             </Item>
           </Body>
-          <Right>
-            <Button
-              transparent
-              onPress={this.fetchEvents}
-            >
-              <Icon name="ios-search" />
-            </Button>
-          </Right>
+          <Right />
         </Header>
 
-        {/* <Header searchBar rounded>
-          <Item>
-            <Button onPress={() => this.props.navigation.navigate('EventOverview')}}>
-              <Icon name="arrow-back" />
-            </Button>
-          </Item>
-
-          <Item>
-            <Icon name="ios-search" />
-            <Input placeholder="Search" />
-          </Item>
-          <Button onPress={this.fetchEvents} transparent>
-            <Text>Search</Text>
-          </Button>
-        </Header> */}
-
         <Content>
-          {/* TODO: search box with submit button */}
+          {(showDisclaimer && searchTouched) &&
+            <Text style={styles.disclaimerText}>Enter at least 3 characters to start searching</Text>
+          }
+
           <List>
-            {this.state.loading && <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />}
-            {!this.state.loading && queryResult.map(data => {
+            {queryResult.map(data => {
               return (
                 <Event data={data} navigateToEvent={this.navigateToEvent} key={data.id} />
               )
             })}
+            {this.state.loading && <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />}
           </List>
 
         </Content>

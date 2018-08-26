@@ -64,41 +64,48 @@ class Sponsors extends React.Component {
           </Content>
         }
 
-        {!this.state.loading &&
+        {!this.state.loading.gold &&
           <Content>
             <List>
-              <View>
-                <Separator style={styles.separator} bordered>
-                  <Text style={styles.separatorText}>GOLD SPONSORS</Text>
-                </Separator>
-                {groupedSponsors.gold.map(data => {
-                  return (
-                    <ListItemDetail square={true} data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
-                  )
-                })}
-              </View>
+              {!!groupedSponsors.gold &&
+                <View>
+                  <Separator style={styles.separator} bordered>
+                    <Text style={styles.separatorText}>GOLD SPONSORS</Text>
+                  </Separator>
+                  {groupedSponsors.gold.map(data => {
+                    return (
+                      <ListItemDetail square={true} data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
+                    )
+                  })}
+                </View>
+              }
 
-              <View>
-                <Separator style={styles.separator} bordered>
-                  <Text style={styles.separatorText}>SILVER SPONSORS</Text>
-                </Separator>
-                {groupedSponsors.silver.map(data => {
-                  return (
-                    <ListItemDetail square={true} data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
-                  )
-                })}
-              </View>
+              {!!groupedSponsors.silver &&
+                <View>
+                  <Separator style={styles.separator} bordered>
+                    <Text style={styles.separatorText}>SILVER SPONSORS</Text>
+                  </Separator>
+                  {groupedSponsors.silver.map(data => {
+                    return (
+                      <ListItemDetail square={true} data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
+                    )
+                  })}
+                </View>
+              }
 
-              <View>
-                <Separator style={styles.separator} bordered>
-                  <Text style={styles.separatorText}>BRONZE SPONSORS</Text>
-                </Separator>
-                {groupedSponsors.bronze.map(data => {
-                  return (
-                    <ListItemDetail square={true} data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
-                  )
-                })}
-              </View>
+              {!!groupedSponsors.bronze &&
+                <View>
+                  <Separator style={styles.separator} bordered>
+                    <Text style={styles.separatorText}>BRONZE SPONSORS</Text>
+                  </Separator>
+                  {groupedSponsors.bronze.map(data => {
+                    return (
+                      <ListItemDetail square={true} data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
+                    )
+                  })}
+                </View>
+              }
+
             </List>
           </Content>
         }

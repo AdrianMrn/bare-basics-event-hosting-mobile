@@ -35,9 +35,7 @@ export default class SideBar extends React.Component {
                             <Text>Events Overview</Text>
                         </ListItem>
 
-                        {/* TODO: Render upcoming events from store in a ScrollView? */}
-
-                        {/* TODO: "Host an event" CTA link to website */}
+                        {/* TODO: "Host your event" CTA link to website */}
 
                         <ListItem // Profile
                             button

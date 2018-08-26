@@ -3,10 +3,7 @@ import axios from 'axios';
 import Config from 'react-native-config'
 import { AsyncStorage } from "react-native"
 
-/* const apiUrl = Config.API_URL; */
-
-/* const apiUrl = 'http://3.120.104.63/api'; // TODO: set in .env */
-const apiUrl = 'http://10.0.3.2:8000/api';
+import { apiUrl } from './config';
 
 async function setAccessToken() {
   const accessToken = await AsyncStorage.getItem('accessToken');
@@ -66,6 +63,39 @@ export async function apiQueryEvents(searchQuery, next) {
   const accessToken = await setAccessToken();
 
   axios.get(`${apiUrl}/query-events/${searchQuery}`)
+    .then(response => {
+      next(false, response);
+    })
+    .catch(error => {
+      next(error);
+    });
+}
+
+export async function apiCheckIfAttending(eventId, next) {
+  const accessToken = await setAccessToken();
+
+  axios.get(`${apiUrl}/check-if-attending-event/${eventId}`)
+    .then(response => {
+      next(false, response);
+    })
+    .catch(error => {
+      next(error);
+    });
+}
+
+export async function apiUnattendEvent(attendeeId, next) {
+  const accessToken = await setAccessToken();
+  axios.delete(`${apiUrl}/attendees/${attendeeId}`)
+    .then(response => {
+      next(false, response);
+    })
+    .catch(error => {
+      next(error);
+    });
+}
+export async function apiAttendEvent(eventId, next) {
+  const accessToken = await setAccessToken();
+  axios.put(`${apiUrl}/attendees/${eventId}`)
     .then(response => {
       next(false, response);
     })

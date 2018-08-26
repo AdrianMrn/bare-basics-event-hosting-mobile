@@ -28,7 +28,7 @@ export default StyleSheet.create({
         flex: 1,
         flexWrap: 'wrap',
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         marginTop: Metrics.doubleBaseMargin,
     },
     renderViewText: {
@@ -39,5 +39,8 @@ export default StyleSheet.create({
         paddingTop: Metrics.doubleBaseMargin,
         paddingBottom: Metrics.doubleBaseMargin
     },
+    address: {
+        ...Fonts.style.description
+    }
 
 })
