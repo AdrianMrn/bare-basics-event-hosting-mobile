@@ -1,6 +1,8 @@
 import { createConnectedStore } from 'undux'
 
 export default createConnectedStore({
+    infoToastDisplayed: false,
+
     user: {
         email: '',
         password: '',

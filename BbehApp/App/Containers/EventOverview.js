@@ -8,7 +8,7 @@ import {
 import { Container, Header, Title, Left, Icon, Right, Thumbnail, Button, Body, Content, Text, Card, CardItem, List, ListItem, Separator, Toast } from "native-base";
 
 import Store from '../Services/Store';
-import { apiFetchAttendingEvents } from '../Services/Api';
+import { apiFetchAttendingEvents, apiGetMyProfile } from '../Services/Api';
 import showToast from '../Services/ShowToast';
 
 import Event from '../Components/Event';
@@ -25,6 +25,27 @@ class EventOverview extends React.Component {
 
     componentDidMount = () => {
         this.fetchAttendingEvents();
+        this.checkIfProfileIsComplete();
+    }
+
+    checkIfProfileIsComplete = () => {
+        const store = this.props.store;
+        if (!store.get('infoToastDisplayed')) {
+            apiGetMyProfile((error, response) => {
+                if (error) {
+                    showToast(error);
+                } else {
+                    if (!response.data.imageUrl) {
+                        Toast.show({
+                            text: 'Complete your profile by accessing it through the menu!',
+                            buttonText: 'Ok',
+                            duration: 5000
+                        });
+                        store.set('infoToastDisplayed')(true);
+                    }
+                }
+            });
+        }
     }
 
     fetchAttendingEvents = () => {

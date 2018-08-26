@@ -6,7 +6,7 @@ import {
 import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Label, Text, Toast } from 'native-base';
 
 import Store from '../../Services/Store';
-import { } from '../../Services/Api';
+import { apiGetMyProfile, apiSaveProfile } from '../../Services/Api';
 import showToast from '../../Services/ShowToast';
 
 import styles from './Styles/ProfileStyles';
@@ -31,9 +31,18 @@ class ProfileScreen extends React.Component {
   }
 
   componentDidMount = () => {
-    // TODO: get user info from API, fill state with user details, toast error etc etc
+    this.fetchProfile();
+  }
 
-    this.setState({ loading: false });
+  fetchProfile = () => {
+    apiGetMyProfile((error, response) => {
+      if (error) {
+        showToast(error);
+      } else {
+        this.setState({ loading: false, ...response.data });
+      }
+    });
+
   }
 
   onInputChange = (field, text) => {
@@ -44,11 +53,13 @@ class ProfileScreen extends React.Component {
 
   saveProfile = () => {
     this.setState({ loading: true });
-    // TODO: send profile to API, display toast on error etc etc
-
-
-    this.setState({ loading: false });
-    showToast(error);
+    apiSaveProfile(this.state, (error, response) => {
+      if (error) {
+        showToast(error);
+      } else {
+        this.setState({ loading: false });
+      }
+    });
   }
 
   render() {
@@ -91,7 +102,7 @@ class ProfileScreen extends React.Component {
                 />
               </Item>
 
-              {/* TODO: add other inputs */}
+              {/* TODO: add other inputs & image upload */}
 
 
             </Form>

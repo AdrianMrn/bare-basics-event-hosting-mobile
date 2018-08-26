@@ -128,6 +128,30 @@ export async function apiGetUserProfile(userId, next) {
     });
 }
 
+export async function apiGetMyProfile(next) {
+  const accessToken = await setAccessToken();
+
+  axios.get(`${apiUrl}/get-my-profile`)
+    .then(response => {
+      next(false, response);
+    })
+    .catch(error => {
+      next(error);
+    });
+}
+
+export async function apiSaveProfile(data, next) {
+  const accessToken = await setAccessToken();
+  // 1 as user id because in the back-end we get the user id from the access token in the request.
+  axios.put(`${apiUrl}/users/1`, data)
+    .then(response => {
+      next(false, response);
+    })
+    .catch(error => {
+      next(error);
+    });
+}
+
 export async function apiGetSessionSpeakers(sessionId, next) {
   const accessToken = await setAccessToken();
 
