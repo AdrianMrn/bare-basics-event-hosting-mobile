@@ -68,7 +68,7 @@ class Schedule extends React.Component {
           this.props.navigation.setParams({ selectedDay: undefined, selectedDayIndex: undefined });
 
           const { width } = Dimensions.get('window')
-          /* TODO: Find a way to scroll when the dayScrollView has rendered
+          /* FIXME: Find a way to scroll when the dayScrollView has rendered
             instead of using an unreliable timeout. If the user switches screen before the timeout has
             finished, the method will fire on another screen and throw an error */
           setTimeout(() => {

@@ -129,7 +129,6 @@ class ProfileScreen extends React.Component {
                 this.state.imageUrl ? { uri: mediaUrl + this.state.imageUrl } : images.user
               } />
             </TouchableOpacity>
-            {/* TODO: center this */}
 
             <Item stackedLabel>
               <Label>First name</Label>

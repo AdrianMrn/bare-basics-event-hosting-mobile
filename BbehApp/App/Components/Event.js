@@ -9,7 +9,6 @@ export default class Event extends Component {
         const data = this.props.data;
         return (
             <ListItem onPress={() => this.props.navigateToEvent(data)} thumbnail>
-                {/* TODO: turn these into cards for aesthetic? */}
                 <Left>
                     <Thumbnail square source={{ uri: mediaUrl + data.imageUrl }} />
                 </Left>

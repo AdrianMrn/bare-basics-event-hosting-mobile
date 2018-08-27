@@ -104,7 +104,6 @@ class GeneralInfo extends React.Component {
 
         <Content padder style={styles.content}>
           <View style={styles.mainInfo}>
-            {/* TODO: make sure image works on prod */}
             <Thumbnail square large source={{ uri: mediaUrl + event.imageUrl }} />
             <Text style={styles.eventName}>{event.name}</Text>
           </View>
