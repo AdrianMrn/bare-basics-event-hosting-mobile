@@ -13,6 +13,7 @@ import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item,
 import Store from '../../Services/Store';
 import { apiGetUserProfile } from '../../Services/Api';
 import showToast from '../../Services/ShowToast';
+import { mediaUrl } from '../../Services/config';
 
 import Divider from '../../Components/Divider';
 
@@ -77,8 +78,7 @@ class ProfileScreen extends React.Component {
           <Content style={styles.content} padder>
 
             <View style={styles.mainInfo}>
-              {/* TODO: get media */}
-              <Thumbnail large source={{ uri: user.imageUrl }} />
+              <Thumbnail large source={{ uri: mediaUrl + user.imageUrl }} />
 
               <View style={styles.nameAndDesc}>
                 <Text style={styles.userName}>{user.first_name} {user.last_name}</Text>

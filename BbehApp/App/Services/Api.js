@@ -152,6 +152,30 @@ export async function apiSaveProfile(data, next) {
     });
 }
 
+export async function apiUpdateProfileImage(image, next) {
+  const accessToken = await setAccessToken();
+
+  const formData = new FormData();
+  const pathParts = image.path.split('/');
+  formData.append("image", {
+    uri: image.path,
+    type: image.mime,
+    name: pathParts[pathParts.length - 1]
+  });
+
+  axios.post(`${apiUrl}/update-profile-image`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+    .then(response => {
+      next(false, response);
+    })
+    .catch(error => {
+      next(error);
+    });
+}
+
 export async function apiGetSessionSpeakers(sessionId, next) {
   const accessToken = await setAccessToken();
 

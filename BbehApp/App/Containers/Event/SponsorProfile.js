@@ -11,6 +11,7 @@ import {
 import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, Thumbnail } from 'native-base';
 
 import Store from '../../Services/Store';
+import { mediaUrl } from '../../Services/config';
 
 import Divider from '../../Components/Divider';
 
@@ -37,8 +38,7 @@ class ProfileScreen extends React.Component {
         <Content style={styles.content} padder>
 
           <View style={styles.mainInfo}>
-            {/* TODO: get media */}
-            <Thumbnail large source={{ uri: data.imageUrl }} />
+            <Thumbnail large source={{ uri: mediaUrl + data.imageUrl }} />
 
             <View style={styles.nameAndDesc}>
               <Text style={styles.userName}>{sponsor.name}</Text>

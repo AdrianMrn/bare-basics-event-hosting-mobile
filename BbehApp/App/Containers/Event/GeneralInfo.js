@@ -14,6 +14,7 @@ import ViewMoreText from 'react-native-view-more-text';
 
 import Store from '../../Services/Store';
 import { apiCheckIfAttending, apiAttendEvent, apiUnattendEvent } from '../../Services/Api';
+import { mediaUrl } from '../../Services/config';
 
 import NavCard from '../../Components/NavCard';
 import Divider from '../../Components/Divider';
@@ -104,7 +105,7 @@ class GeneralInfo extends React.Component {
         <Content padder style={styles.content}>
           <View style={styles.mainInfo}>
             {/* TODO: make sure image works on prod */}
-            <Thumbnail square large source={{ uri: event.imageUrl }} />
+            <Thumbnail square large source={{ uri: mediaUrl + event.imageUrl }} />
             <Text style={styles.eventName}>{event.name}</Text>
           </View>
 

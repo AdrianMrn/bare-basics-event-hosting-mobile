@@ -6,9 +6,15 @@ export default StyleSheet.create({
     backgroundColor: Colors.background,
   },
   form: {
-    margin: Metrics.doubleBaseMargin,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
   },
+  avatar: {
+    marginTop: Metrics.doubleBaseMargin,
+    borderWidth: 1,
+    borderColor: Colors.charcoal,
+    borderRadius: 120,
+    alignSelf: 'center'
+  },
+  marginTop: {
+    marginTop: Metrics.doubleBaseMargin
+  }
 })

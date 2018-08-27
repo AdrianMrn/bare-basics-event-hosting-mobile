@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Left, Right, Thumbnail, Button, Body, Text, ListItem, Icon } from "native-base";
 import moment from 'moment';
 
+import { mediaUrl } from '../Services/config';
+
 export default class Event extends Component {
     render() {
         const data = this.props.data;
@@ -9,8 +11,7 @@ export default class Event extends Component {
             <ListItem onPress={() => this.props.navigateToEvent(data)} thumbnail>
                 {/* TODO: turn these into cards for aesthetic? */}
                 <Left>
-                    {/* TODO: make sure image works on prod */}
-                    <Thumbnail square source={{ uri: data.imageUrl }} />
+                    <Thumbnail square source={{ uri: mediaUrl + data.imageUrl }} />
                 </Left>
 
                 <Body>
