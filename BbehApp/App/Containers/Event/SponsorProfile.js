@@ -38,7 +38,7 @@ class ProfileScreen extends React.Component {
         <Content style={styles.content} padder>
 
           <View style={styles.mainInfo}>
-            <Thumbnail large source={{ uri: mediaUrl + data.imageUrl }} />
+            <Thumbnail large source={{ uri: mediaUrl + sponsor.imageUrl }} />
 
             <View style={styles.nameAndDesc}>
               <Text style={styles.userName}>{sponsor.name}</Text>

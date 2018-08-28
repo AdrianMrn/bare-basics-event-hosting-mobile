@@ -25,6 +25,10 @@ class ExploreEvents extends React.Component {
     }
   }
 
+  componentDidMount = () => {
+    /* TODO: (in backend and here): get the next 10 upcoming events and display them */
+  }
+
   fetchEvents = debounce(() => {
     if (this.state.searchQuery && this.state.searchQuery.length >= 3) {
       this.setState({ loading: true, showDisclaimer: false });

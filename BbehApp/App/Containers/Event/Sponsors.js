@@ -106,6 +106,20 @@ class Sponsors extends React.Component {
                 </View>
               }
 
+              {/* TODO: display groupedSponsors where the sponsor isn't bronze or silver or gold */}
+              {!!groupedSponsors.other &&
+                <View>
+                  <Separator style={styles.separator} bordered>
+                    <Text style={styles.separatorText}>SPONSORS</Text>
+                  </Separator>
+                  {groupedSponsors.other.map(data => {
+                    return (
+                      <ListItemDetail square={true} data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
+                    )
+                  })}
+                </View>
+              }
+
             </List>
           </Content>
         }

@@ -152,7 +152,7 @@ class GeneralInfo extends React.Component {
           }
 
           {!this.state.attending &&
-            <Button onPress={this.attendEvent} block disabled={this.state.loading ? true : false} primary={this.state.loading ? false : true}>
+            <Button style={{ marginTop: 20 }} onPress={this.attendEvent} block disabled={this.state.loading ? true : false} primary={this.state.loading ? false : true}>
               {!!this.state.loading && <ActivityIndicator size="small" color="#fff" />}
               {!this.state.loading && <Icon name="add" />}
               <Text>Join</Text>

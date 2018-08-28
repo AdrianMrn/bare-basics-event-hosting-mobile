@@ -111,7 +111,7 @@ class ProfileScreen extends React.Component {
               }
             </View>
 
-            <Divider marginTop={10} />
+            {(!!user.facebook || user.linkedin || user.twitter || user.website) && < Divider marginTop={10} />}
 
             <Text style={styles.userDescription}>
               {user.description}

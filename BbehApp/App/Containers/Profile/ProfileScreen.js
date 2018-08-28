@@ -84,12 +84,14 @@ class ProfileScreen extends React.Component {
   }
 
   saveProfile = () => {
+    console.log(this.state);
     this.setState({ loading: true });
     apiSaveProfile(this.state, (error, response) => {
       if (error) {
         showToast(error);
         this.setState({ loading: false });
       } else {
+        console.log(response.data.user);
         this.setState({ loading: false });
         Toast.show({
           text: 'Profile saved!',
@@ -103,6 +105,7 @@ class ProfileScreen extends React.Component {
   render() {
     const state = this.state;
     const { loading } = state;
+    const localImage = ({ uri: state.imageUrl } || images.user);
     return (
       <Container style={styles.authScreen}>
         <Header>
@@ -126,7 +129,7 @@ class ProfileScreen extends React.Component {
 
             <TouchableOpacity style={styles.avatar} onPress={this.pickImage}>
               <Thumbnail style={{ height: 150, width: 150 }} large source={
-                this.state.imageUrl ? { uri: mediaUrl + this.state.imageUrl } : images.user
+                this.state.imageUrl ? { uri: mediaUrl + this.state.imageUrl } : localImage
               } />
             </TouchableOpacity>
 
