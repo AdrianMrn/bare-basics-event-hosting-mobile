@@ -62,10 +62,13 @@ class Schedule extends React.Component {
           this.props.navigation.setParams({ selectedDay: undefined, selectedDayIndex: undefined });
 
           /* Calculating how much we're scrolling. 62.8 is the width of 1 DayButton component including margin. */
+          /* FIXME: Find a way to scroll when the dayScrollView has rendered
+            instead of using an unreliable timeout. If the user switches screen before the timeout has
+            finished, the method will fire on another screen and throw an error */
           const { width } = Dimensions.get('window');
           setTimeout(() => {
             if (this._dayScrollView) {
-              const buttonWidth = 62.8;
+              const buttonWidth = 62.8; //hardcoded width
               this._dayScrollView.scrollTo({ x: (selectedDayIndex * buttonWidth) - (width / 2) + (buttonWidth / 2) });
             }
           }, 100);

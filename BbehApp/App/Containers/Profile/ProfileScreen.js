@@ -22,6 +22,8 @@ class ProfileScreen extends React.Component {
   constructor() {
     super();
     this.state = {
+      email: '',
+      password: '',
       first_name: '',
       last_name: '',
       company: '',
@@ -134,6 +136,24 @@ class ProfileScreen extends React.Component {
             </TouchableOpacity>
 
             <Item stackedLabel>
+              <Label>Email</Label>
+              <Input
+                value={state.email}
+                disabled={true}
+              />
+            </Item>
+
+            <Item stackedLabel>
+              <Label>New Password (leave empty when not changing)</Label>
+              <Input
+                onChangeText={text => { this.onInputChange('password', text) }}
+                value={state.password}
+                disabled={loading}
+                secureTextEntry={true}
+              />
+            </Item>
+
+            <Item stackedLabel style={styles.marginTop}>
               <Label>First name</Label>
               <Input
                 onChangeText={text => { this.onInputChange('first_name', text) }}
