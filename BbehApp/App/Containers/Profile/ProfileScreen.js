@@ -86,14 +86,12 @@ class ProfileScreen extends React.Component {
   }
 
   saveProfile = () => {
-    console.log(this.state);
     this.setState({ loading: true });
     apiSaveProfile(this.state, (error, response) => {
       if (error) {
         showToast(error);
         this.setState({ loading: false });
       } else {
-        console.log(response.data.user);
         this.setState({ loading: false });
         Toast.show({
           text: 'Profile saved!',

@@ -26,7 +26,6 @@ class Sponsors extends React.Component {
     apiGetEventExtraDetails('sponsors', selectedEvent.id, (error, response) => {
       if (error) {
         showToast(error);
-        console.log(error);
       } else {
         const groupedSponsors = _.groupBy(response.data, (sponsor) => sponsor.tier);
         this.setState({ groupedSponsors });

@@ -2,9 +2,8 @@ import { StyleSheet } from 'react-native';
 import { Fonts, Metrics, Colors } from '../../../Themes';
 
 export default StyleSheet.create({
-    content: {
-        paddingLeft: Metrics.baseMargin,
-        paddingRight: Metrics.baseMargin
+    padder: {
+        padding: Metrics.doubleBaseMargin
     },
     mainInfo: {
         flex: 1,
@@ -37,7 +36,9 @@ export default StyleSheet.create({
     },
     separator: {
         paddingTop: Metrics.doubleBaseMargin,
-        paddingBottom: Metrics.doubleBaseMargin
+        paddingBottom: Metrics.doubleBaseMargin,
+        marginBottom: Metrics.baseMargin,
+        width: Metrics.screenWidth,
     },
 
 })

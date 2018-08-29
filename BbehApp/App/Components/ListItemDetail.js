@@ -15,7 +15,7 @@ export default class ListItemDetail extends Component {
 
                 <Body>
                     <Text>{data.name || data.speakerName}</Text>
-                    <Text>{" "}</Text>
+                    <Text>{' '}</Text>
                 </Body>
 
                 <Right>

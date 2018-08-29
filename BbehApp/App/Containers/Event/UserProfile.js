@@ -100,47 +100,49 @@ class ProfileScreen extends React.Component {
           </Content>}
 
         {!this.state.loading &&
-          <Content style={styles.content} padder>
+          <Content>
+            <View style={styles.padder}>
 
-            <View style={styles.mainInfo}>
-              <Thumbnail large source={{ uri: mediaUrl + user.imageUrl }} />
+              <View style={styles.mainInfo}>
+                <Thumbnail large source={{ uri: mediaUrl + user.imageUrl }} />
 
-              <View style={styles.nameAndDesc}>
-                <Text style={styles.userName}>{user.first_name} {user.last_name}</Text>
-                <Text note style={styles.userPosition}>{user.position} {(!!user.company && !!user.position) ? 'at' : ''} {user.company}</Text>
+                <View style={styles.nameAndDesc}>
+                  <Text style={styles.userName}>{user.first_name} {user.last_name}</Text>
+                  <Text note style={styles.userPosition}>{user.position} {(!!user.company && !!user.position) ? 'at' : ''} {user.company}</Text>
+                </View>
               </View>
+
+              <Divider marginTop={10} />
+
+              <View style={styles.socialLinks}>
+                {!!user.facebook &&
+                  <Button onPress={() => Linking.openURL(user.facebook)} transparent >
+                    <Icon name='logo-facebook' />
+                  </Button>
+                }
+                {!!user.linkedin &&
+                  <Button onPress={() => Linking.openURL(user.linkedin)} transparent >
+                    <Icon name='logo-linkedin' />
+                  </Button>
+                }
+                {!!user.twitter &&
+                  <Button onPress={() => Linking.openURL(user.twitter)} transparent >
+                    <Icon name='logo-twitter' />
+                  </Button>
+                }
+                {!!user.website &&
+                  <Button onPress={() => Linking.openURL(user.website)} transparent>
+                    <Icon name='link' />
+                  </Button>
+                }
+              </View>
+
+              {(!!user.facebook || user.linkedin || user.twitter || user.website) && < Divider marginTop={10} />}
+
+              <Text style={styles.userDescription}>
+                {user.description}
+              </Text>
             </View>
-
-            <Divider marginTop={10} />
-
-            <View style={styles.socialLinks}>
-              {!!user.facebook &&
-                <Button onPress={() => Linking.openURL(user.facebook)} transparent >
-                  <Icon name='logo-facebook' />
-                </Button>
-              }
-              {!!user.linkedin &&
-                <Button onPress={() => Linking.openURL(user.linkedin)} transparent >
-                  <Icon name='logo-linkedin' />
-                </Button>
-              }
-              {!!user.twitter &&
-                <Button onPress={() => Linking.openURL(user.twitter)} transparent >
-                  <Icon name='logo-twitter' />
-                </Button>
-              }
-              {!!user.website &&
-                <Button onPress={() => Linking.openURL(user.website)} transparent>
-                  <Icon name='link' />
-                </Button>
-              }
-            </View>
-
-            {(!!user.facebook || user.linkedin || user.twitter || user.website) && < Divider marginTop={10} />}
-
-            <Text style={styles.userDescription}>
-              {user.description}
-            </Text>
 
             {loadingSessions &&
               <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />
@@ -148,9 +150,8 @@ class ProfileScreen extends React.Component {
 
             {(!loadingSessions && userSessions) &&
               <View>
-                {/* TODO: if this user has talks at this event, display them here */}
-                <Divider marginTop={10} />
-                <List style={{ marginTop: 5 }}>
+                <Divider marginTop={20} />
+                <List style={{ marginTop: 10 }}>
                   <Separator style={styles.separator} bordered>
                     <Text style={styles.separatorText}>SESSIONS AT THIS EVENT</Text>
                   </Separator>

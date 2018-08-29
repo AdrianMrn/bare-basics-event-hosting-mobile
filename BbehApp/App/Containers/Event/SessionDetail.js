@@ -47,15 +47,16 @@ class SessionDetail extends React.Component {
 
   back = () => {
     const navBack = this.props.navigation.getParam('navBack', undefined);
+    console.log(navBack);
     if (navBack) {
       this.props.navigation.setParams({ navBack: undefined });
       this.props.navigation.navigate(navBack);
+    } else {
+      this.props.navigation.navigate('Schedule', {
+        selectedDay: this.props.navigation.getParam('selectedDay', undefined),
+        selectedDayIndex: this.props.navigation.getParam('selectedDayIndex', undefined),
+      });
     }
-
-    this.props.navigation.navigate('Schedule', {
-      selectedDay: this.props.navigation.getParam('selectedDay', undefined),
-      selectedDayIndex: this.props.navigation.getParam('selectedDayIndex', undefined),
-    })
   }
 
   render() {

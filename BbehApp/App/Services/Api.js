@@ -199,3 +199,15 @@ export async function apiGetUserSessions(userId, eventId, next) {
       next(error);
     });
 }
+
+export async function apiGetNextTenEvents(next) {
+  const accessToken = await setAccessToken();
+
+  axios.get(`${apiUrl}/get-next-ten-events`)
+    .then(response => {
+      next(false, response);
+    })
+    .catch(error => {
+      next(error);
+    });
+}

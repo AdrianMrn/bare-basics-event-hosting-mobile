@@ -6,7 +6,7 @@ import { Container, Header, Left, Body, Right, Button, Icon, Input, Text, Conten
 import { debounce } from 'debounce';
 
 import Store from '../../Services/Store';
-import { apiQueryEvents } from '../../Services/Api';
+import { apiQueryEvents, apiGetNextTenEvents } from '../../Services/Api';
 import showToast from '../../Services/ShowToast';
 
 import Event from '../../Components/Event';
@@ -17,7 +17,8 @@ class ExploreEvents extends React.Component {
   constructor() {
     super();
     this.state = {
-      loading: false,
+      blockInput: true,
+      loading: true,
       queryResult: [],
       searchQuery: '',
       showDisclaimer: false,
@@ -26,7 +27,21 @@ class ExploreEvents extends React.Component {
   }
 
   componentDidMount = () => {
-    /* TODO: (in backend and here): get the next 10 upcoming events and display them */
+    this.getNextTenEvents();
+  }
+
+  getNextTenEvents = () => {
+    apiGetNextTenEvents((error, response) => {
+      if (error) {
+        showToast(error);
+        console.log(error);
+      } else {
+        console.log(response.data);
+        this.setState({ queryResult: response.data });
+      }
+      this.setState({ loading: false, blockInput: false });
+    });
+
   }
 
   fetchEvents = debounce(() => {
@@ -63,7 +78,7 @@ class ExploreEvents extends React.Component {
   }
 
   render() {
-    const { queryResult, searchQuery, showDisclaimer, searchTouched } = this.state;
+    const { queryResult, searchQuery, showDisclaimer, searchTouched, blockInput } = this.state;
 
     return (
       <Container>
@@ -85,6 +100,7 @@ class ExploreEvents extends React.Component {
                 onChangeText={text => { this.onInputChange('searchQuery', text) }}
                 value={searchQuery}
                 autoFocus={true}
+                disabled={blockInput}
               />
             </Item>
           </Body>

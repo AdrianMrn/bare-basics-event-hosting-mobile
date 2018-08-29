@@ -38,9 +38,7 @@ class GeneralInfo extends React.Component {
       if (error) {
         showToast(error);
       } else {
-        console.log(response);
         if (response.data.attending) {
-          console.log(response.data);
           this.setState({ loading: false, attending: true, attendeeId: response.data.attendeeId });
         } else {
           this.setState({ loading: false, attending: false });
