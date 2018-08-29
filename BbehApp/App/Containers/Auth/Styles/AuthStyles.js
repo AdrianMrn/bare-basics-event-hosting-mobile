@@ -27,5 +27,8 @@ export default StyleSheet.create({
     ...Fonts.style.normal,
     color: Colors.blueish,
     marginTop: Metrics.doubleBaseMargin
+  },
+  logo: {
+    alignSelf: 'center'
   }
 })

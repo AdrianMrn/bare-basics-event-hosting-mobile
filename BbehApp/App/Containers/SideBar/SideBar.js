@@ -8,12 +8,24 @@ import styles from './Styles/SideBarStyles';
 import images from '../../Themes/Images';
 
 export default class SideBar extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            logoWidth: 20
+        }
+    }
+
+    measureLogoWidth = event => {
+        console.log(event.nativeEvent.layout.width);
+        this.setState({ logoWidth: event.nativeEvent.layout.width });
+    }
+
     render() {
         return (
-            <Container>
+            <Container onLayout={(event) => this.measureLogoWidth(event)}>
                 <Content>
                     <Image
-                        width={Dimensions.get('window').width/3*2}
+                        width={this.state.logoWidth - 20}
                         source={images.textlogo}
                     />
 

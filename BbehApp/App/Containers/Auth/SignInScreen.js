@@ -5,13 +5,16 @@ import {
   StatusBar,
   StyleSheet,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Button, Text, Toast } from 'native-base';
+import Image from 'react-native-scalable-image';
 
 import Store from '../../Services/Store';
 import { apiLogin } from '../../Services/Api';
 import showToast from '../../Services/ShowToast';
+import images from '../../Themes/Images';
 
 import styles from './Styles/AuthStyles'
 
@@ -21,8 +24,15 @@ class SignInScreen extends React.Component {
     this.state = {
       email: '',
       password: '',
-      loading: false
+      loading: false,
+
+      logoWidth: 0
     }
+  }
+
+  componentDidMount = () => {
+    const { width } = Dimensions.get('window');
+    this.setState({ logoWidth: width - 60 });
   }
 
   onInputChange = (field, text) => {
@@ -56,6 +66,11 @@ class SignInScreen extends React.Component {
     return (
       <Container style={styles.authScreen}>
         <Content padder>
+          <Image
+            width={this.state.logoWidth}
+            source={images.textlogo}
+            style={styles.logo}
+          />
           <Form style={styles.authForm}>
             <Item regular>
               <Input
