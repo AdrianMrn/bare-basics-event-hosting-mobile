@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native'
-import {Fonts, Metrics, Colors} from '../../../Themes/'
+import { StyleSheet } from 'react-native'
+import { Fonts, Metrics, Colors } from '../../../Themes/'
 
 export default StyleSheet.create({
   authScreen: {
@@ -9,12 +9,19 @@ export default StyleSheet.create({
   },
   avatar: {
     marginTop: Metrics.doubleBaseMargin,
-    borderWidth: 1,
-    borderColor: Colors.charcoal,
-    borderRadius: 120,
     alignSelf: 'center'
   },
   marginTop: {
     marginTop: Metrics.doubleBaseMargin
+  },
+  textarea: {
+    width: '100%'
+  },
+  thumbnail: {
+    height: 150,
+    width: 150,
+    borderRadius: 20,
+    borderColor: Colors.charcoal,
+    borderWidth: 1,
   }
 })

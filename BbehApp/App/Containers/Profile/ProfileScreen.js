@@ -31,8 +31,9 @@ class ProfileScreen extends React.Component {
       facebook: '',
       website: '',
       twitter: '',
-      imageUrl: '',
+      imageUrl: '', // If it exists, this is the image from the API
 
+      localUrl: '', // If a new image is uploaded, it's URI is placed in this state prop. It will take priority over an existing imageUrl
       loading: true,
     }
   }
@@ -72,7 +73,8 @@ class ProfileScreen extends React.Component {
           showToast(error);
           this.setState({ loading: false });
         } else {
-          this.setState({ loading: false, imageUrl: image.path });
+          // Set localUrl and empty imageUrl so the local (new) image gets priority
+          this.setState({ loading: false, localUrl: image.path, imageUrl: '' });
           Toast.show({
             text: 'Image saved!',
             buttonText: 'Okay',
@@ -105,7 +107,7 @@ class ProfileScreen extends React.Component {
   render() {
     const state = this.state;
     const { loading } = state;
-    const localImage = ({ uri: state.imageUrl } || images.user);
+    const localImage = (state.localUrl ? { uri: state.localUrl } : images.user);
     return (
       <Container style={styles.authScreen}>
         <Header>
@@ -128,7 +130,7 @@ class ProfileScreen extends React.Component {
           <Form style={styles.form}>
 
             <TouchableOpacity style={styles.avatar} onPress={this.pickImage}>
-              <Thumbnail style={{ height: 150, width: 150 }} large source={
+              <Image style={styles.thumbnail} large source={
                 this.state.imageUrl ? { uri: mediaUrl + this.state.imageUrl } : localImage
               } />
             </TouchableOpacity>
@@ -178,6 +180,7 @@ class ProfileScreen extends React.Component {
                 disabled={loading}
               /> */}
               <Textarea
+                style={styles.textarea}
                 rowSpan={5}
                 bordered
                 onChangeText={text => { this.onInputChange('description', text) }}
