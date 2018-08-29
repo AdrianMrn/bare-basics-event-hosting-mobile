@@ -51,13 +51,7 @@ class Schedule extends React.Component {
         const firstDay = Math.min(...Object.keys(groupedSessions));
         const lastDay = Math.max(...Object.keys(groupedSessions));
         const amountOfDays = moment.duration(moment(lastDay).diff(moment(firstDay))).asDays() + 1;
-
-        this.setState({
-          groupedSessions,
-          firstDay,
-          amountOfDays,
-          loading: false
-        });
+        this.setState({ groupedSessions, firstDay, amountOfDays, loading: false });
 
         /* if we navigated here from a SessionDetail page, set selectedDay to the session's day and scroll to it,
           otherwise we're setting selectedDay to the first day of the event and not scrolling. */
@@ -67,13 +61,11 @@ class Schedule extends React.Component {
           this.setState({ selectedDay, selectedDayIndex });
           this.props.navigation.setParams({ selectedDay: undefined, selectedDayIndex: undefined });
 
-          const { width } = Dimensions.get('window')
-          /* FIXME: Find a way to scroll when the dayScrollView has rendered
-            instead of using an unreliable timeout. If the user switches screen before the timeout has
-            finished, the method will fire on another screen and throw an error */
+          /* Calculating how much we're scrolling. 62.8 is the width of 1 DayButton component including margin. */
+          const { width } = Dimensions.get('window');
           setTimeout(() => {
             if (this._dayScrollView) {
-              const buttonWidth = 62.8; // Hardcoded
+              const buttonWidth = 62.8;
               this._dayScrollView.scrollTo({ x: (selectedDayIndex * buttonWidth) - (width / 2) + (buttonWidth / 2) });
             }
           }, 100);
@@ -124,13 +116,15 @@ class Schedule extends React.Component {
             <ScrollView ref={view => this._dayScrollView = view} style={{ marginTop: 10, height: 64, width: '100%' }} horizontal>
               {_.times(amountOfDays, (dayIndex) => {
                 day = moment(firstDay).add(dayIndex, 'd');
-                return (<DayButton
-                  key={dayIndex}
-                  day={day}
-                  dayIndex={dayIndex}
-                  active={(selectedDay == day.format('x')) ? true : false}
-                  setActiveDay={this.setActiveDay}
-                />)
+                return (
+                  <DayButton
+                    key={dayIndex}
+                    day={day}
+                    dayIndex={dayIndex}
+                    active={(selectedDay == day.format('x')) ? true : false}
+                    setActiveDay={this.setActiveDay}
+                  />
+                )
               })}
             </ScrollView>
 
