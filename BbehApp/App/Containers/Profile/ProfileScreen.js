@@ -6,7 +6,7 @@ import {
   Image,
   Alert
 } from 'react-native';
-import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Label, Text, Thumbnail, Toast } from 'native-base';
+import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Label, Text, Thumbnail, Toast, Textarea } from 'native-base';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import Store from '../../Services/Store';
@@ -172,7 +172,14 @@ class ProfileScreen extends React.Component {
             <Item stackedLabel style={styles.marginTop}>
               <Label>Bio</Label>
               {/* TODO: textarea */}
-              <Input
+              {/* <Input
+                onChangeText={text => { this.onInputChange('description', text) }}
+                value={state.description}
+                disabled={loading}
+              /> */}
+              <Textarea
+                rowSpan={5}
+                bordered
                 onChangeText={text => { this.onInputChange('description', text) }}
                 value={state.description}
                 disabled={loading}
