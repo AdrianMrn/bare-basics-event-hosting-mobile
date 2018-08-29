@@ -45,7 +45,13 @@ class SessionDetail extends React.Component {
     this.props.navigation.navigate('UserProfile', { navBack: 'SessionDetail' });
   }
 
-  backToSchedule = () => {
+  back = () => {
+    const navBack = this.props.navigation.getParam('navBack', undefined);
+    if (navBack) {
+      this.props.navigation.setParams({ navBack: undefined });
+      this.props.navigation.navigate(navBack);
+    }
+
     this.props.navigation.navigate('Schedule', {
       selectedDay: this.props.navigation.getParam('selectedDay', undefined),
       selectedDayIndex: this.props.navigation.getParam('selectedDayIndex', undefined),
@@ -60,7 +66,7 @@ class SessionDetail extends React.Component {
           <Left>
             <Button
               transparent
-              onPress={this.backToSchedule}>
+              onPress={this.back}>
               <Icon name="arrow-back" />
             </Button>
           </Left>

@@ -106,7 +106,6 @@ class Sponsors extends React.Component {
                 </View>
               }
 
-              {/* TODO: display groupedSponsors where the sponsor isn't bronze or silver or gold */}
               {!!groupedSponsors.other &&
                 <View>
                   <Separator style={styles.separator} bordered>

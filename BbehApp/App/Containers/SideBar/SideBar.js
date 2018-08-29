@@ -1,33 +1,21 @@
 import React from "react";
-import { Image, StatusBar, Linking } from "react-native";
+import { StatusBar, Linking, Dimensions } from "react-native";
 import { Container, Content, Text, List, ListItem, Icon, Left, Right } from "native-base";
+import Image from 'react-native-scalable-image';
 
 import styles from './Styles/SideBarStyles';
+
+import images from '../../Themes/Images';
 
 export default class SideBar extends React.Component {
     render() {
         return (
             <Container>
                 <Content>
-                    {/* TODO: BBEvents Logo goes here */}
-                    {/* <Image
-                        source={{
-                        uri: "https://github.com/GeekyAnts/NativeBase-KitchenSink/raw/react-navigation/img/drawer-cover.png"
-                        }}
-                        style={{
-                        height: 120,
-                        alignSelf: "stretch",
-                        justifyContent: "center",
-                        alignItems: "center"
-                        }}>
-                        <Image
-                        square
-                        style={{ height: 80, width: 70 }}
-                        source={{
-                            uri: "https://github.com/GeekyAnts/NativeBase-KitchenSink/raw/react-navigation/img/logo.png"
-                        }}
-                        />
-                    </Image> */}
+                    <Image
+                        width={Dimensions.get('window').width/3*2}
+                        source={images.textlogo}
+                    />
 
                     <List>
                         <ListItem // EventOverview

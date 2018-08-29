@@ -34,6 +34,10 @@ export default StyleSheet.create({
     },
     sessionSpeakerList: {
         marginTop: Metrics.doubleBaseMargin
-    }
+    },
+    separator: {
+        paddingTop: Metrics.doubleBaseMargin,
+        paddingBottom: Metrics.doubleBaseMargin
+    },
 
 })

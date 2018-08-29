@@ -173,12 +173,6 @@ class ProfileScreen extends React.Component {
 
             <Item stackedLabel style={styles.marginTop}>
               <Label>Bio</Label>
-              {/* TODO: textarea */}
-              {/* <Input
-                onChangeText={text => { this.onInputChange('description', text) }}
-                value={state.description}
-                disabled={loading}
-              /> */}
               <Textarea
                 style={styles.textarea}
                 rowSpan={5}

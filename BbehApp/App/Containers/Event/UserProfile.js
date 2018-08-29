@@ -8,14 +8,15 @@ import {
   View,
   Linking
 } from 'react-native';
-import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, Thumbnail, Toast } from 'native-base';
+import { Container, Header, Content, Left, Icon, Body, Title, Right, Form, Item, Input, Button, Text, Thumbnail, Toast, Separator, List } from 'native-base';
 
 import Store from '../../Services/Store';
-import { apiGetUserProfile } from '../../Services/Api';
+import { apiGetUserProfile, apiGetUserSessions } from '../../Services/Api';
 import showToast from '../../Services/ShowToast';
 import { mediaUrl } from '../../Services/config';
 
 import Divider from '../../Components/Divider';
+import Session from '../../Components/Session';
 
 import styles from './Styles/ProfileStyles';
 
@@ -24,6 +25,10 @@ class ProfileScreen extends React.Component {
     super();
     this.state = {
       loading: true,
+
+      loadingSessions: true,
+      userSessions: [],
+
       user: {
         id: '',
         first_name: '',
@@ -41,7 +46,11 @@ class ProfileScreen extends React.Component {
   }
 
   componentDidMount() {
-    apiGetUserProfile(this.props.store.get('selectedUser').user_id, (error, response) => {
+    const store = this.props.store;
+    const userId = store.get('selectedUser').user_id
+    const eventId = store.get('selectedEvent').id
+
+    apiGetUserProfile(userId, (error, response) => {
       if (error) {
         showToast(error);
         this.setState({ loading: false });
@@ -49,10 +58,26 @@ class ProfileScreen extends React.Component {
         this.setState({ user: response.data, loading: false });
       }
     });
+
+    apiGetUserSessions(userId, eventId, (error, response) => {
+      if (error) {
+        showToast(error);
+        this.setState({ loadingSessions: false });
+      } else {
+        this.setState({ loadingSessions: false, userSessions: response.data });
+      }
+    });
+  }
+
+  // Navigate to Session detail
+  navigateToDetail = data => {
+    this.props.store.set('selectedSession')(data);
+    this.props.navigation.navigate('SessionDetail', { navBack: 'UserProfile' });
   }
 
   render() {
     const user = this.state.user;
+    const { userSessions, loadingSessions } = this.state;
     return (
       <Container>
         <Header>
@@ -117,7 +142,25 @@ class ProfileScreen extends React.Component {
               {user.description}
             </Text>
 
-            {/* TODO: if this user has talks at this event, display them here */}
+            {loadingSessions &&
+              <ActivityIndicator style={{ marginTop: 20, marginBottom: 20 }} size="large" />
+            }
+
+            {(!loadingSessions && userSessions) &&
+              <View>
+                {/* TODO: if this user has talks at this event, display them here */}
+                <Divider marginTop={10} />
+                <List style={{ marginTop: 5 }}>
+                  <Separator style={styles.separator} bordered>
+                    <Text style={styles.separatorText}>SESSIONS AT THIS EVENT</Text>
+                  </Separator>
+
+                  {!!userSessions && userSessions.map(data =>
+                    <Session data={data} navigateToDetail={this.navigateToDetail} key={data.id} />
+                  )}
+                </List>
+              </View>
+            }
 
           </Content>
         }

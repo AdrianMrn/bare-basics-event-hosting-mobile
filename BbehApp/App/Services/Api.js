@@ -187,3 +187,15 @@ export async function apiGetSessionSpeakers(sessionId, next) {
       next(error);
     });
 }
+
+export async function apiGetUserSessions(userId, eventId, next) {
+  const accessToken = await setAccessToken();
+
+  axios.get(`${apiUrl}/get-user-sessions/${userId}/${eventId}`)
+    .then(response => {
+      next(false, response);
+    })
+    .catch(error => {
+      next(error);
+    });
+}
