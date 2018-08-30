@@ -136,7 +136,7 @@ class ProfileScreen extends React.Component {
             </TouchableOpacity>
 
             <Item stackedLabel>
-              <Label>Email</Label>
+              <Label>Email (cannot be changed)</Label>
               <Input
                 value={state.email}
                 disabled={true}

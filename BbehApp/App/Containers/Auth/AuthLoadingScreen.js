@@ -29,7 +29,7 @@ export default class AuthLoadingScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ActivityIndicator size="large" />
-        {/* TODO: set launch screen to background with app logo (not in this screen, somewhere in android folder, not sure exactly) */}
+        {/* TODO: splash screen: https://github.com/bamlab/generator-rn-toolbox/blob/master/generators/assets/README.md */}
         <StatusBar barStyle="default" />
       </View>
     );
