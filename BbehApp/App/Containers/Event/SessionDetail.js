@@ -47,7 +47,6 @@ class SessionDetail extends React.Component {
 
   back = () => {
     const navBack = this.props.navigation.getParam('navBack', undefined);
-    console.log(navBack);
     if (navBack) {
       this.props.navigation.setParams({ navBack: undefined });
       this.props.navigation.navigate(navBack);

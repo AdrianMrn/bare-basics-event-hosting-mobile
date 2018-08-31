@@ -16,7 +16,6 @@ export default class SideBar extends React.Component {
     }
 
     measureLogoWidth = event => {
-        console.log(event.nativeEvent.layout.width);
         this.setState({ logoWidth: event.nativeEvent.layout.width });
     }
 

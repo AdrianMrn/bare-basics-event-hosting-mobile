@@ -34,9 +34,7 @@ class ExploreEvents extends React.Component {
     apiGetNextTenEvents((error, response) => {
       if (error) {
         showToast(error);
-        console.log(error);
       } else {
-        console.log(response.data);
         this.setState({ queryResult: response.data });
       }
       this.setState({ loading: false, blockInput: false });
