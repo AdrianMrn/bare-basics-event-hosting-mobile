@@ -1,4 +1,4 @@
-package com.bbehapp;
+package com.bbevents;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "BbehApp";
+        return "BBEvents";
     }
 }

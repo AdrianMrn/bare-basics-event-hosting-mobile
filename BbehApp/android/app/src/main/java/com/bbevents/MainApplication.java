@@ -1,4 +1,4 @@
-package com.bbehapp;
+package com.bbevents;
 
 import android.app.Application;
 
